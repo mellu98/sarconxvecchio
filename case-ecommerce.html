@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study — E-commerce Custom Shopify | SarconX Pavia Milano</title>
+    <meta name="description" content="Come SarconX ha costruito un e-commerce Shopify su misura per un brand food & retail: tema personalizzato, checkout ottimizzato, pagine prodotto e integrazioni back-office. Un case study concreto.">
+    <link rel="canonical" href="https://sarconx.com/case-ecommerce.html">
+    <meta property="og:title" content="Case Study — E-commerce Custom Shopify | SarconX">
+    <meta property="og:description" content="Tema su misura, checkout ottimizzato e integrazioni back-office: un caso concreto di e-commerce SarconX.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sarconx.com/case-ecommerce.html">
+    <link rel="icon" type="image/svg+xml" href="assets/brand/sarconx-favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}html,body{max-width:100%;overflow-x:hidden}body{font-family:'Hanken Grotesk',sans-serif}h1,h2,h3,h4{font-family:'Bricolage Grotesque',sans-serif;letter-spacing:-0.02em}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition-duration:0.01ms !important}.scroll-reveal{opacity:1 !important;transform:none !important}}a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid #b5771f;outline-offset:2px;border-radius:2px}
+        ::selection{background:rgba(181,119,31,.2);color:#1c1a26}
+        ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:#f2ebe0}::-webkit-scrollbar-thumb{background:#d8cdbb;border-radius:4px}::-webkit-scrollbar-thumb:hover{background:#b5771f}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+        .glass{background:rgba(255,255,255,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(28,26,38,.06)}
+        .glass-strong{background:rgba(250,247,242,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(28,26,38,.07)}
+        .neon-border{border:1px solid #e6ddcf;box-shadow:0 1px 3px rgba(28,26,38,.04)}
+        .neon-border-purple{border:1px solid rgba(181,119,31,.3);box-shadow:0 1px 3px rgba(181,119,31,.05)}
+        .gradient-text{color:#b5771f}
+        .gradient-text-cyan{color:#2e6b73}
+        .btn-primary{background:#b5771f;color:#fff;transition:all .3s ease}
+        .btn-primary:hover{background:#9c6414;box-shadow:0 8px 20px rgba(181,119,31,.28);transform:translateY(-2px)}
+        .btn-outline{border:1px solid rgba(46,107,115,.45);transition:all .3s ease}
+        .btn-outline:hover{background:rgba(46,107,115,.07);border-color:#2e6b73;transform:translateY(-2px)}
+        .hero-grid{background-image:linear-gradient(rgba(28,26,38,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(28,26,38,.025) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 30%,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse 70% 60% at 50% 30%,#000 30%,transparent 75%)}
+        .scroll-reveal{opacity:0;transform:translateY(30px);transition:all .7s cubic-bezier(.4,0,.2,1)}
+        .scroll-reveal.visible{opacity:1;transform:translateY(0)}
+        .mobile-menu{transform:translateX(100%);transition:transform .3s ease}
+        .mobile-menu.open{transform:translateX(0)}
+        .menu-backdrop{position:fixed;inset:0;background:rgba(28,26,38,.35);backdrop-filter:blur(4px);z-index:49;opacity:0;pointer-events:none;transition:opacity .3s ease}
+        .menu-backdrop.open{opacity:1;pointer-events:auto}
+        /* --- frame screenshot prodotto --- */
+        .shot{border:2px solid #d8cdbb;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 20px 50px rgba(28,26,38,.12)}
+        .shot-bar{display:flex;align-items:center;gap:7px;padding:11px 15px;border-bottom:1px solid #e6ddcf;background:#faf7f2}
+        .shot-bar i{width:11px;height:11px;border-radius:50%;background:#e2d7c4;display:block}
+        .shot-bar em{margin-left:12px;font-style:normal;font-size:12px;color:#6b6355;font-family:'Hanken Grotesk',sans-serif;letter-spacing:.03em}
+        .shot-body{aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#f7f1e8,#ece1cf);position:relative}
+        .shot-body .ic{font-size:34px;color:#c3b49a}
+        .shot-body .ph{font-size:13px;color:#9c8f79;letter-spacing:.02em;text-align:center;padding:0 16px}
+        .shot-body img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+        .shot-body:has(img) .ic,.shot-body:has(img) .ph{display:none}
+        /* motion: zoom lento (Ken Burns) sul frame hero; disattivato con prefers-reduced-motion */
+        .shot-body{overflow:hidden}
+        .shot-body img[src*="ecommerce-home.webp"]{animation:kenburns 22s ease-in-out infinite alternate;transform-origin:left center}
+        @keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.09)}}
+        .tl{position:relative;padding-left:28px}
+        .tl::before{content:'';position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:#e6ddcf}
+        .tl-item{position:relative;padding-bottom:28px}
+        .tl-item:last-child{padding-bottom:0}
+        .tl-item::before{content:'';position:absolute;left:-27px;top:4px;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid #b5771f}
+
+
+        .story-label{display:inline-flex;align-items:center;gap:10px;color:#2e6b73;font-size:15px;font-weight:700;letter-spacing:.01em;margin-bottom:18px}
+        .story-label::before{content:'';width:28px;height:1px;background:#b5771f;display:inline-block}
+        .narrative-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.9fr);gap:clamp(36px,6vw,88px);align-items:center}
+        .narrative-copy h2{font-size:clamp(2.25rem,4.5vw,4.25rem);line-height:.98;letter-spacing:-.035em;text-wrap:balance;margin-bottom:28px;color:#1c1a26}
+        .narrative-copy p{font-size:clamp(1.05rem,1.5vw,1.28rem);line-height:1.75;color:#6b6355;max-width:58ch}
+        .question-panel{background:#fff;border:1px solid #e6ddcf;border-radius:16px;padding:clamp(24px,4vw,42px)}
+        .question-panel-title{font-size:15px;font-weight:800;color:#2e6b73;margin-bottom:14px}
+        .client-question{padding:18px 0;border-bottom:1px solid #eee4d6;color:#1c1a26;font-size:clamp(1rem,1.3vw,1.15rem);line-height:1.55}
+        .client-question:last-of-type{border-bottom:0}
+        .question-answer{margin-top:22px;padding:18px 20px;border-radius:14px;background:#faf7f2;color:#6b6355;font-size:15px;line-height:1.6}
+        .results-editorial{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.15fr);gap:clamp(36px,6vw,82px);align-items:start}
+        .results-editorial h2{font-size:clamp(2.15rem,4.2vw,4rem);line-height:1;letter-spacing:-.035em;text-wrap:balance;color:#1c1a26;margin-bottom:20px}
+        .results-editorial .lead{font-size:clamp(1.05rem,1.5vw,1.24rem);line-height:1.75;color:#6b6355;max-width:54ch}
+        .change-ledger{border-top:1px solid #e6ddcf;border-bottom:1px solid #e6ddcf}
+        .change-row{display:grid;grid-template-columns:minmax(120px,.42fr) 1fr;gap:24px;padding:24px 0;border-top:1px solid #e6ddcf}
+        .change-row:first-child{border-top:0}
+        .change-row .from{color:#9a6a54;font-size:14px;font-weight:800}
+        .change-row .to{color:#1c1a26;font-size:clamp(1.05rem,1.4vw,1.22rem);font-weight:800;line-height:1.3;margin-bottom:8px}
+        .change-row p{color:#6b6355;font-size:15px;line-height:1.65}
+        .proof-grid{margin-top:44px;display:grid;grid-template-columns:1.25fr .78fr;grid-template-rows:repeat(2,minmax(170px,1fr));gap:14px}
+        .proof-grid figure{margin:0;border:1px solid #e6ddcf;border-radius:16px;overflow:hidden;background:#fff;position:relative;min-height:180px}
+        .proof-grid .proof-large{grid-row:span 2;min-height:380px}
+        .proof-grid img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+        .proof-grid .proof-large img{object-position:left top}
+        .proof-caption{position:absolute;left:14px;bottom:14px;background:rgba(250,247,242,.94);border:1px solid rgba(28,26,38,.08);border-radius:999px;padding:8px 12px;color:#1c1a26;font-size:12px;font-weight:700;z-index:2}
+        @media (max-width:900px){.narrative-split,.results-editorial{grid-template-columns:1fr}.proof-grid{grid-template-columns:1fr;grid-template-rows:auto}.proof-grid .proof-large{grid-row:auto;min-height:240px}.change-row{grid-template-columns:1fr;gap:8px}}
+        @media (max-width:640px){#cookieBanner{bottom:auto !important;top:4.5rem;padding:.75rem;z-index:60} #cookieBanner .glass-strong{border-radius:0 0 1rem 1rem} #whatsappFloat .absolute{display:none}}
+        #menuBtn .iconify{pointer-events:none}
+    
+        @media(max-width:640px){#whatsappFloat{display:none!important}}
+    </style>
+    <noscript><style>.scroll-reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
+</head>
+<body class="bg-sx-dark text-sx-light font-sans overflow-x-hidden">
+
+<!-- NAVBAR -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2"><img class="brand-mark" src="assets/brand/sarconx-mark.svg" alt="" width="36" height="36" aria-hidden="true"><span class="brand-wordmark" aria-label="SarconX"><span class="brand-word case-brand-main" aria-hidden="true">Sarcon</span><span class="brand-x case-brand-x" aria-hidden="true">X</span></span></a>
+        <div class="hidden md:flex items-center gap-8">
+            <a href="index.html#servizi" class="text-sm text-sx-muted hover:text-sx-cyan transition-colors">Servizi</a>
+            <a href="portfolio.html" class="text-sm text-sx-cyan font-medium">Portfolio</a>
+            <a href="index.html#about" class="text-sm text-sx-muted hover:text-sx-cyan transition-colors">Chi Siamo</a>
+            <a href="index.html#dati" class="text-sm text-sx-muted hover:text-sx-cyan transition-colors">Dati</a>
+            <a href="index.html#contatti" class="btn-primary px-5 py-2 rounded-full text-sm font-medium">Contattaci</a>
+        </div>
+        <button id="menuBtn" class="md:hidden text-sx-light p-2 cursor-pointer" onclick="toggleMenu()" aria-label="Apri menu" aria-expanded="false">
+            <span class="iconify text-2xl" data-icon="mdi:menu"></span>
+        </button>
+    </div>
+</nav>
+<div id="menuBackdrop" class="menu-backdrop" onclick="toggleMenu()"></div>
+<div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-72 h-full z-50 glass-strong">
+    <div class="p-6">
+        <button onclick="toggleMenu()" class="text-sx-light mb-8 float-right"><span class="iconify text-2xl" data-icon="mdi:close"></span></button>
+        <div class="clear-both flex flex-col gap-6 mt-8">
+            <a href="index.html#servizi" onclick="toggleMenu()" class="text-lg text-sx-light">Servizi</a>
+            <a href="portfolio.html" onclick="toggleMenu()" class="text-lg text-sx-cyan">Portfolio</a>
+            <a href="index.html#about" onclick="toggleMenu()" class="text-lg text-sx-light">Chi Siamo</a>
+            <a href="index.html#contatti" onclick="toggleMenu()" class="btn-primary px-5 py-3 rounded-full text-sm font-medium text-center mt-4">Contattaci</a>
+        </div>
+    </div>
+</div>
+
+<main>
+<!-- HERO -->
+<section class="relative pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden">
+    <div class="absolute inset-0 hero-grid"></div>
+    <div class="absolute top-10 right-1/4 w-96 h-96 bg-sx-purple/10 rounded-full blur-[130px]"></div>
+    <div class="relative z-10 max-w-5xl mx-auto px-6">
+        <a href="portfolio.html" class="inline-flex items-center gap-1.5 text-sm text-sx-muted hover:text-sx-cyan transition-colors mb-6">
+            <span class="iconify" data-icon="mdi:arrow-left"></span> Torna al portfolio
+        </a>
+        <div class="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-6">
+            <span class="w-2 h-2 bg-sx-purple rounded-full"></span>
+            <span class="text-xs text-sx-cyan tracking-wide uppercase font-semibold">Case Study · E-commerce</span>
+        </div>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black leading-[1.02] tracking-tight mb-5">
+            <span class="text-sx-light">Uno store che vende</span><br>
+            <span class="gradient-text">come il brand racconta</span>
+        </h1>
+        <p class="text-lg text-sx-muted max-w-2xl leading-relaxed mb-8">
+            Un e-commerce Shopify cucito su misura — non l'ennesimo template. Tema personalizzato,
+            checkout senza attriti e integrazioni back-office che tolgono lavoro manuale ogni giorno.
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl">
+            <div class="glass rounded-xl p-4 neon-border">
+                <p class="text-[11px] text-sx-muted uppercase tracking-wider mb-1">Settore</p>
+                <p class="text-sm font-bold text-sx-light">Food &amp; Retail</p>
+            </div>
+            <div class="glass rounded-xl p-4 neon-border">
+                <p class="text-[11px] text-sx-muted uppercase tracking-wider mb-1">Servizio</p>
+                <p class="text-sm font-bold text-sx-light">E-commerce Shopify</p>
+            </div>
+            <div class="glass rounded-xl p-4 neon-border">
+                <p class="text-[11px] text-sx-muted uppercase tracking-wider mb-1">Focus</p>
+                <p class="text-sm font-bold text-sx-light">Conversione &amp; gestione</p>
+            </div>
+            <div class="glass rounded-xl p-4 neon-border">
+                <p class="text-[11px] text-sx-muted uppercase tracking-wider mb-1">Ruolo</p>
+                <p class="text-sm font-bold text-sx-light">Tema &amp; build</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HERO SHOT -->
+<section class="pb-20 md:pb-28">
+    <div class="max-w-5xl mx-auto px-6 scroll-reveal">
+        <figure class="shot">
+            <div class="shot-bar"><i></i><i></i><i></i><em>store · homepage</em></div>
+            <div class="shot-body">
+                <img src="assets/screenshots/ecommerce-home.webp" alt="Homepage dello store Grissinciok con i grissini ricoperti di cioccolato">
+            </div>
+        </figure>
+    </div>
+</section>
+
+<!-- IL PROBLEMA -->
+<section class="py-16 md:py-24 border-t border-sx-border/60">
+    <div class="max-w-5xl mx-auto px-6 narrative-split">
+        <div class="narrative-copy">
+            <p class="story-label">La sfida vera</p>
+            <h2>Il brand era riconoscibile. Lo store no.</h2>
+            <p class="mb-4">
+                Grissinciok aveva un prodotto memorabile: grissini ricoperti, gusti chiari, identit&agrave; food forte.
+                Il problema era che lo store non restituiva quella stessa cura.
+            </p>
+            <p>
+                Serviva trasformare un e-commerce funzionale in un percorso d'acquisto capace di raccontare il gusto,
+                guidare la scelta e ridurre lavoro manuale dietro le quinte.
+            </p>
+        </div>
+        <aside class="question-panel" aria-label="Domande reali da intercettare nello store Grissinciok">
+            <p class="question-panel-title">Le domande che lo store doveva assorbire</p>
+            <div class="client-question">&ldquo;Che gusto scelgo se non conosco ancora il prodotto?&rdquo;</div>
+            <div class="client-question">&ldquo;Mi fido ad acquistare da un brand che scopro adesso?&rdquo;</div>
+            <div class="client-question">&ldquo;Quanto &egrave; semplice arrivare dal prodotto al checkout?&rdquo;</div>
+            <p class="question-answer">La risposta progettuale: meno template, pi&ugrave; racconto di prodotto. Il cliente deve capire, desiderare e comprare senza dover interpretare lo store.</p>
+        </aside>
+    </div>
+</section>
+
+<!-- COSA ABBIAMO COSTRUITO -->
+<section class="py-16 md:py-24 bg-sx-deeper border-y border-sx-border/60">
+    <div class="max-w-5xl mx-auto px-6">
+        <div class="text-center mb-14 scroll-reveal">
+            <span class="text-xs text-sx-cyan tracking-widest uppercase">La soluzione</span>
+            <h2 class="text-3xl md:text-4xl font-black mt-3 text-sx-light">Cosa abbiamo costruito</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-10 items-center mb-16 scroll-reveal">
+            <div>
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-sx-purple/20 to-sx-purple/5 flex items-center justify-center mb-4">
+                    <span class="iconify text-sx-purple text-xl" data-icon="mdi:palette-swatch-outline"></span>
+                </div>
+                <h3 class="text-xl font-bold text-sx-light mb-3">Tema su misura, fedele al brand</h3>
+                <p class="text-sm text-sx-muted leading-relaxed">Abbiamo costruito il tema Shopify da zero in Liquid: tipografia, colori, ritmo e micro-interazioni che parlano la lingua del brand, non di un template.</p>
+            </div>
+            <figure class="shot">
+                <div class="shot-bar"><i></i><i></i><i></i><em>store · homepage</em></div>
+                <div class="shot-body">
+                    <img src="assets/screenshots/ecommerce-home-mid.webp" alt="Sezione 'Gli otto gusti' dello store Grissinciok">
+                </div>
+            </figure>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-10 items-center mb-16 scroll-reveal">
+            <figure class="shot md:order-1 order-2">
+                <div class="shot-bar"><i></i><i></i><i></i><em>prodotto · checkout</em></div>
+                <div class="shot-body">
+                    <img src="assets/screenshots/ecommerce-product.webp" alt="Pagina prodotto GrissinCiok Pistacchio con Granella con recensioni">
+                </div>
+            </figure>
+            <div class="md:order-2 order-1">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-sx-cyan/20 to-sx-cyan/5 flex items-center justify-center mb-4">
+                    <span class="iconify text-sx-cyan text-xl" data-icon="mdi:cart-check"></span>
+                </div>
+                <h3 class="text-xl font-bold text-sx-light mb-3">Pagine prodotto &amp; checkout senza attriti</h3>
+                <p class="text-sm text-sx-muted leading-relaxed">Schede prodotto che raccontano e convincono, e un percorso d'acquisto ridotto all'essenziale per non perdere il cliente all'ultimo passo.</p>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-10 items-center scroll-reveal">
+            <div>
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-sx-purple/20 to-sx-purple/5 flex items-center justify-center mb-4">
+                    <span class="iconify text-sx-purple text-xl" data-icon="mdi:view-grid-outline"></span>
+                </div>
+                <h3 class="text-xl font-bold text-sx-light mb-3">Un catalogo che invita all'acquisto</h3>
+                <p class="text-sm text-sx-muted leading-relaxed">Collezioni chiare, prodotti presentati con cura e navigazione fluida: il cliente trova subito quello che cerca e scopre il resto. Sotto, ordini e magazzino restano collegati al back-office.</p>
+            </div>
+            <figure class="shot">
+                <div class="shot-bar"><i></i><i></i><i></i><em>catalogo · shop</em></div>
+                <div class="shot-body">
+                    <img src="assets/screenshots/ecommerce-collection.webp" alt="Catalogo prodotti dello store Grissinciok">
+                </div>
+            </figure>
+        </div>
+    </div>
+</section>
+
+<!-- RISULTATI -->
+<section class="py-16 md:py-24">
+    <div class="max-w-5xl mx-auto px-6">
+        <div class="results-editorial">
+            <div>
+                <p class="story-label">Il cambiamento</p>
+                <h2>Da template generico a negozio che accompagna l'acquisto.</h2>
+                <p class="lead">
+                    Il risultato non &egrave; solo uno store pi&ugrave; bello. &Egrave; un percorso pi&ugrave; chiaro: il prodotto si capisce,
+                    il catalogo invita alla scoperta e l'acquisto resta fluido fino alla conferma.
+                </p>
+            </div>
+            <div class="change-ledger" aria-label="Cambiamenti principali dello store Grissinciok">
+                <div class="change-row">
+                    <div class="from">Prima: tema preconfezionato</div>
+                    <div>
+                        <div class="to">Dopo: identit&agrave; coerente con il brand</div>
+                        <p>Tipografia, colori e ritmo visivo fanno percepire subito il mondo Grissinciok, non un template Shopify qualunque.</p>
+                    </div>
+                </div>
+                <div class="change-row">
+                    <div class="from">Prima: prodotto poco raccontato</div>
+                    <div>
+                        <div class="to">Dopo: schede che vendono il gusto</div>
+                        <p>Le pagine prodotto mostrano varianti, recensioni e dettagli utili per scegliere senza frizione.</p>
+                    </div>
+                </div>
+                <div class="change-row">
+                    <div class="from">Prima: gestione spezzata</div>
+                    <div>
+                        <div class="to">Dopo: catalogo e operativit&agrave; pi&ugrave; semplici</div>
+                        <p>Collezioni, prodotti e flusso d'acquisto lavorano insieme, riducendo il peso operativo sul team.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="proof-grid" aria-label="Prove visive del case study e-commerce Grissinciok">
+            <figure class="proof-large">
+                <img src="assets/screenshots/ecommerce-home-mid.webp" alt="Sezione prodotti dello store Grissinciok con gli otto gusti">
+                <figcaption class="proof-caption">Homepage: il gusto diventa racconto</figcaption>
+            </figure>
+            <figure>
+                <img src="assets/screenshots/ecommerce-product.webp" alt="Pagina prodotto Grissinciok con dettagli e recensioni">
+                <figcaption class="proof-caption">Prodotto: scelta pi&ugrave; sicura</figcaption>
+            </figure>
+            <figure>
+                <img src="assets/screenshots/ecommerce-collection.webp" alt="Catalogo prodotti dello store Grissinciok">
+                <figcaption class="proof-caption">Catalogo: scoperta ordinata</figcaption>
+            </figure>
+        </div>
+    </div>
+</section>
+
+<!-- STACK & APPROCCIO -->
+<section class="py-16 md:py-24 bg-sx-deeper border-y border-sx-border/60">
+    <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-12">
+        <div class="scroll-reveal">
+            <span class="text-xs text-sx-cyan tracking-widest uppercase">Sotto il cofano</span>
+            <h2 class="text-2xl md:text-3xl font-black mt-3 mb-5 text-sx-light">Stack &amp; approccio</h2>
+            <p class="text-sm text-sx-muted leading-relaxed mb-5">Tema Shopify sviluppato su misura in Liquid, con attenzione a performance, SEO on-page e un'esperienza d'acquisto pensata per convertire — non solo per essere bella.</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-xs bg-white border border-sx-border text-sx-light px-3 py-1.5 rounded-lg">Shopify</span>
+                <span class="text-xs bg-white border border-sx-border text-sx-light px-3 py-1.5 rounded-lg">Liquid</span>
+                <span class="text-xs bg-white border border-sx-border text-sx-light px-3 py-1.5 rounded-lg">UX / UI</span>
+                <span class="text-xs bg-white border border-sx-border text-sx-light px-3 py-1.5 rounded-lg">Checkout ottimizzato</span>
+                <span class="text-xs bg-white border border-sx-border text-sx-light px-3 py-1.5 rounded-lg">Integrazioni back-office</span>
+            </div>
+        </div>
+        <div class="scroll-reveal">
+            <span class="text-xs text-sx-cyan tracking-widest uppercase">Come abbiamo lavorato</span>
+            <h2 class="text-2xl md:text-3xl font-black mt-3 mb-6 text-sx-light">Il percorso</h2>
+            <div class="tl">
+                <div class="tl-item"><h4 class="text-sm font-bold text-sx-light mb-1">Diagnosi</h4><p class="text-sm text-sx-muted">Analisi del brand, del catalogo e del percorso d'acquisto attuale.</p></div>
+                <div class="tl-item"><h4 class="text-sm font-bold text-sx-light mb-1">Design del tema</h4><p class="text-sm text-sx-muted">Identità visiva tradotta in un tema Shopify su misura.</p></div>
+                <div class="tl-item"><h4 class="text-sm font-bold text-sx-light mb-1">Build &amp; integrazioni</h4><p class="text-sm text-sx-muted">Sviluppo in Liquid, checkout e collegamento al back-office.</p></div>
+                <div class="tl-item"><h4 class="text-sm font-bold text-sx-light mb-1">Lancio &amp; ottimizzazione</h4><p class="text-sm text-sx-muted">Online, con misurazione continua delle conversioni.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-20 md:py-28 relative overflow-hidden">
+    <div class="absolute inset-0 hero-grid opacity-40"></div>
+    <div class="relative z-10 max-w-3xl mx-auto px-6 text-center scroll-reveal">
+        <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-5">
+            <span class="text-sx-light">Hai un e-commerce</span> <span class="gradient-text">che non converte?</span>
+        </h2>
+        <p class="text-sx-muted text-lg mb-8">Raccontaci il tuo store. La prima consulenza è gratuita e senza impegno.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="index.html#contatti" class="btn-primary px-8 py-3.5 rounded-full text-sm font-semibold inline-flex items-center justify-center gap-2">
+                <span>Richiedi una consulenza</span><span class="iconify" data-icon="mdi:arrow-right"></span>
+            </a>
+            <a href="portfolio.html" class="btn-outline px-8 py-3.5 rounded-full text-sm font-medium text-sx-cyan inline-flex items-center justify-center gap-2">
+                <span>Vedi altri progetti</span>
+            </a>
+        </div>
+    </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer class="relative border-t border-sx-border/50 py-12">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <a href="index.html" class="flex items-center gap-2"><img class="brand-mark" src="assets/brand/sarconx-mark.svg" alt="" width="36" height="36" aria-hidden="true"><span class="brand-wordmark" aria-label="SarconX"><span class="brand-word case-brand-main" aria-hidden="true">Sarcon</span><span class="brand-x case-brand-x" aria-hidden="true">X</span></span></a>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="privacy-policy.html" class="text-xs text-sx-muted hover:text-sx-cyan transition-colors">Privacy Policy</a>
+                <a href="cookie-policy.html" class="text-xs text-sx-muted hover:text-sx-cyan transition-colors">Cookie Policy</a>
+                <a href="termini-condizioni.html" class="text-xs text-sx-muted hover:text-sx-cyan transition-colors">Termini e Condizioni</a>
+            </div>
+            <p class="text-xs text-sx-muted">&copy; 2026 SarconX — P.IVA 02838240188</p>
+        </div>
+    </div>
+</footer>
+
+<a id="whatsappFloat" href="https://wa.me/393341340272?text=Ciao%20SarconX%2C%20ho%20visto%20il%20vostro%20case%20study%20e-commerce%20e%20vorrei%20parlarne." target="_blank" rel="noopener noreferrer" aria-label="Contattaci su WhatsApp" class="fixed bottom-6 right-6 z-[9999] w-14 h-14 bg-green-500 hover:bg-green-400 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 transition-all duration-300 hover:scale-110">
+    <span class="iconify text-white text-7" data-icon="mdi:whatsapp"></span>
+</a>
+
+<script>
+function toggleMenu(){
+    document.getElementById('mobileMenu').classList.toggle('open');
+    document.getElementById('menuBackdrop').classList.toggle('open');
+    var b=document.getElementById('menuBtn');
+    b.setAttribute('aria-expanded',document.getElementById('mobileMenu').classList.contains('open'));
+}
+document.getElementById('menuBtn').addEventListener('click', toggleMenu);
+window.addEventListener('scroll',function(){
+    var n=document.getElementById('navbar');
+    if(window.scrollY>50)n.classList.add('glass-strong');else n.classList.remove('glass-strong');
+},{passive:true});
+(function(){
+    var els=document.querySelectorAll('.scroll-reveal');
+    var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.05});
+    els.forEach(function(el){obs.observe(el);});
+})();
+</script>
+</body>
+</html>

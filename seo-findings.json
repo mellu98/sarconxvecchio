@@ -1,0 +1,1027 @@
+[
+  {
+    "id": "M1.robots.missing",
+    "module": "M1",
+    "title": "robots.txt returns 404",
+    "status": "fail",
+    "severity": 3,
+    "scope": "site",
+    "evidence": {
+      "observed": "GET /robots.txt returns HTTP 404; no robots.txt file is available for https://sarconx.com/."
+    },
+    "expected": "A valid robots.txt at /robots.txt should exist, allow crawling, and reference the XML sitemap.",
+    "recommendation": "Create /robots.txt with 'User-agent: *\\nAllow: /\\nSitemap: https://sarconx.com/sitemap.xml'. If canonical domain is sarconx.it, host and reference it there.",
+    "fixable": "auto",
+    "verification": {
+      "method": "robots_parse",
+      "assertion": "GET /robots.txt returns 200 with crawlable directives and sitemap reference",
+      "reproduce": "curl -I https://sarconx.com/robots.txt"
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "high",
+      "magnitude": "medium",
+      "rationale": "Missing robots.txt prevents directive control and sitemap discovery, reducing crawl efficiency."
+    }
+  },
+  {
+    "id": "M2.indexability.canonical_mismatch",
+    "module": "M2",
+    "title": "Canonical href points to a different registered domain",
+    "status": "fail",
+    "severity": 5,
+    "scope": "page",
+    "evidence": {
+      "observed": "Page served from https://sarconx.com/ (definitive production domain) declares <link rel=\"canonical\" href=\"https://sarconx.it/\">. DNS resolution for sarconx.it fails (NXDOMAIN); the canonical domain does not exist."
+    },
+    "expected": "Canonical URL should reference the definitive production domain https://sarconx.com/, or the non-existent sarconx.it domain should be abandoned/redirected.",
+    "recommendation": "Update canonical link, og:url, and all schema @id/url properties to https://sarconx.com/. Remove or redirect any references to sarconx.it.",
+    "fixable": "proposed",
+    "verification": {
+      "method": "header_check",
+      "assertion": "canonical href === https://sarconx.com/",
+      "reproduce": "curl -s https://sarconx.com/ | grep -E \"rel=\"canonical\"|property=\"og:url\"\" && host sarconx.it || echo \"sarconx.it does not resolve\""
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "high",
+      "magnitude": "high",
+      "rationale": "Cross-domain canonical splits authority and may cause the staging URL to be dropped from the index; AI systems may cite an unreachable domain."
+    }
+  },
+  {
+    "id": "M2.internal_links.broken_paths",
+    "module": "M2",
+    "title": "Internal path links point to non-existent pages",
+    "status": "fail",
+    "severity": 4,
+    "scope": "page",
+    "evidence": {
+      "observed": "Single-page site contains root-relative links to /portfolio, /agent-operativita, /automazione-ai, /privacy-policy, /cookie-policy, /termini-condizioni, /siti-web, /software-dedicati, /gestionali, /app-web-app, /agentizzazione that return 404."
+    },
+    "expected": "Every internal link should resolve to an existing resource with HTTP 200.",
+    "recommendation": "Create the linked pages (especially legal pages) or convert links to in-page anchors. At minimum /privacy-policy, /cookie-policy and /termini-condizioni must exist for a local-business site.",
+    "fixable": "proposed",
+    "verification": {
+      "method": "link_graph",
+      "assertion": "All root-relative internal links return HTTP 200",
+      "reproduce": "for path in /portfolio /privacy-policy /cookie-policy /termini-condizioni; do curl -o /dev/null -s -w \"${path}: %{http_code}\\n\" https://sarconx.com$path; done"
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "high",
+      "magnitude": "high",
+      "rationale": "Broken links waste crawl budget, create soft-404 experiences, and harm trust for local-business YMYL signals."
+    }
+  },
+  {
+    "id": "M2.status_code.ok",
+    "module": "M2",
+    "title": "Page returns HTTP 200 with no redirect chain",
+    "status": "pass",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "GET / returns HTTP 200 OK with 0 redirects."
+    },
+    "expected": "Target URL should return 200 and not chain through redirects.",
+    "recommendation": "Maintain current 200 response for the canonical URL once domain strategy is resolved.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "header_check",
+      "assertion": "response.status === 200 && redirect_count === 0",
+      "reproduce": "curl -I -L https://sarconx.com/"
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "high",
+      "magnitude": "low",
+      "rationale": "A clean 200 response ensures crawlers can fetch and index the page without redirect latency."
+    }
+  },
+  {
+    "id": "M2.meta_robots.ok",
+    "module": "M2",
+    "title": "Meta robots allows indexing and following",
+    "status": "pass",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "<meta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\"> is present."
+    },
+    "expected": "Page should be indexable and links should be followed unless intentionally blocked.",
+    "recommendation": "Keep as-is; revisit only if staging origin should be noindexed.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "robots meta contains 'index, follow' and no 'noindex'",
+      "reproduce": "grep -n 'name=\"robots\"' index.html"
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "high",
+      "magnitude": "low",
+      "rationale": "Correct robots directives permit indexing and link discovery."
+    }
+  },
+  {
+    "id": "M4.rendering.js_service_content",
+    "module": "M4",
+    "title": "Primary service cards and headings are injected by JavaScript",
+    "status": "fail",
+    "severity": 4,
+    "scope": "page",
+    "evidence": {
+      "observed": "Services slider container <div class=\"service-track\" id=\"serviceTrack\"></div> is empty in raw HTML. Six service cards, H3 headings, descriptions and internal links are built from a JS array and injected at runtime."
+    },
+    "expected": "Core content, headings, and internal links should be present in static HTML so crawlers and non-JS clients can access them.",
+    "recommendation": "Server-side render the service cards inside #serviceTrack; use JS only to enhance slider behaviour.",
+    "fixable": "proposed",
+    "verification": {
+      "method": "render_diff",
+      "assertion": "raw_html contains service card H3 elements inside #serviceTrack",
+      "reproduce": "grep -n 'serviceTrack' index.html && grep -n 'Automazione Flussi AI' index.html"
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "high",
+      "magnitude": "high",
+      "rationale": "Search engines and AI crawlers that do not execute JS may miss primary service descriptions, reducing relevance coverage."
+    }
+  },
+  {
+    "id": "M4.rendering.static_html",
+    "module": "M4",
+    "title": "Page is primarily static HTML with no CSR hydration markers",
+    "status": "pass",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "No __NEXT_DATA__, data-reactroot, ng-version, data-vue, or svelte hydration markers found."
+    },
+    "expected": "Static HTML should contain main content without requiring client-side rendering frameworks.",
+    "recommendation": "Maintain static architecture; only fix the JS-injected service section.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "no CSR hydration markers found",
+      "reproduce": "grep -E '__NEXT_DATA__|data-reactroot|ng-version|data-vue|svelte' index.html || echo 'no CSR markers'"
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "high",
+      "magnitude": "low",
+      "rationale": "Static HTML is easier and faster for crawlers to process than fully CSR pages."
+    }
+  },
+  {
+    "id": "M7.title.too_long",
+    "module": "M7",
+    "title": "Title tag exceeds recommended length",
+    "status": "fail",
+    "severity": 3,
+    "scope": "page",
+    "evidence": {
+      "observed": "<title>SarconX — AI Automation Agency Pavia & Milano | Agenti AI per Aziende | +300% Efficienza</title> is 88 characters."
+    },
+    "expected": "Title should be concise, front-loaded with primary keyword, and ideally within 50–60 characters.",
+    "recommendation": "Shorten to roughly 55 characters, e.g. 'SarconX | AI Automation Agency Pavia & Milano'. Move value propositions to meta description.",
+    "fixable": "auto",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "title length <= 60 characters",
+      "reproduce": "node -e \"const h=require('fs').readFileSync('index.html','utf8'); const m=h.match(/<title>(.*?)<\\/title>/); console.log(m[1].length)\""
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "medium",
+      "magnitude": "medium",
+      "rationale": "Over-long titles truncate in search results, reducing click-through rate and diluting keyword prominence."
+    }
+  },
+  {
+    "id": "M7.description.too_long",
+    "module": "M7",
+    "title": "Meta description exceeds recommended length",
+    "status": "fail",
+    "severity": 3,
+    "scope": "page",
+    "evidence": {
+      "observed": "Meta description is 223 characters."
+    },
+    "expected": "Meta description should be 150–160 characters to display fully on most devices.",
+    "recommendation": "Rewrite to 150–160 characters while preserving primary keywords and CTA.",
+    "fixable": "auto",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "description length between 120 and 160 characters",
+      "reproduce": "node -e \"const h=require('fs').readFileSync('index.html','utf8'); const m=h.match(/<meta name=\\\"description\\\" content=\\\"(.*?)\\\"/); console.log(m[1].length)\""
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "medium",
+      "magnitude": "medium",
+      "rationale": "Descriptions longer than ~160 characters are truncated in SERPs, weakening snippet message and likely lowering CTR."
+    }
+  },
+  {
+    "id": "M7.head_basics.ok",
+    "module": "M7",
+    "title": "Core head hygiene elements are present",
+    "status": "pass",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "Charset UTF-8, viewport, language, robots, description, canonical, and inline SVG favicon are all present."
+    },
+    "expected": "Head should contain charset, viewport, language, title, description, canonical, and favicon.",
+    "recommendation": "Maintain current setup; only fix canonical/domain mismatch and title/description lengths.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "all core head elements present",
+      "reproduce": "grep -n 'charset=\"UTF-8\"\\|name=\"viewport\"\\|html lang=\"it\"\\|rel=\"icon\"\\|name=\"robots\"' index.html"
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "high",
+      "magnitude": "low",
+      "rationale": "Complete head hygiene supports correct rendering, indexing, and snippet presentation."
+    }
+  },
+  {
+    "id": "M7b.mobile.viewport_ok",
+    "module": "M7b",
+    "title": "Viewport meta tag is correctly configured",
+    "status": "pass",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> is present."
+    },
+    "expected": "Viewport should enable responsive scaling on mobile devices.",
+    "recommendation": "Keep as-is.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "viewport_content === 'width=device-width, initial-scale=1.0'",
+      "reproduce": "grep -n 'name=\"viewport\"' index.html"
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "high",
+      "magnitude": "low",
+      "rationale": "Correct viewport is a prerequisite for mobile usability."
+    }
+  },
+  {
+    "id": "M7b.mobile.small_font",
+    "module": "M7b",
+    "title": "Small 10 px font sizes are used in multiple places",
+    "status": "warn",
+    "severity": 2,
+    "scope": "page",
+    "evidence": {
+      "observed": "The utility class text-[10px] appears 34 times for labels, badges, sources, footer metadata, and stat captions."
+    },
+    "expected": "Base readable text should generally be at least 12–16 px to meet mobile usability guidelines.",
+    "recommendation": "Increase small labels to at least 12 px (text-xs). Reserve 10 px only for non-essential decorative elements.",
+    "fixable": "auto",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "count_of_text_10px reduced to decorative-only usage",
+      "reproduce": "grep -o 'text-\\[10px\\]' index.html | wc -l"
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "medium",
+      "magnitude": "low",
+      "rationale": "Very small text can trigger mobile-usability warnings and is harder to read for users with low vision."
+    }
+  },
+  {
+    "id": "M7c.headings.structure_ok",
+    "module": "M7c",
+    "title": "Heading hierarchy is logical with a single H1",
+    "status": "pass",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "One H1 followed by H2 sections, then H3 cards/steps, and H4 footer columns. No skipped levels in static HTML."
+    },
+    "expected": "Single descriptive H1 and sequential heading levels.",
+    "recommendation": "Preserve hierarchy; ensure JS-injected service cards use H3 in rendered DOM.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "h1_count === 1 && no skipped heading levels",
+      "reproduce": "node -e \"const h=require('fs').readFileSync('index.html','utf8'); console.log('h1:',(h.match(/<h1/g)||[]).length,'h2:',(h.match(/<h2/g)||[]).length,'h3:',(h.match(/<h3/g)||[]).length,'h4:',(h.match(/<h4/g)||[]).length)\""
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "high",
+      "magnitude": "medium",
+      "rationale": "Clear heading structure improves accessibility and helps search engines understand content sections."
+    }
+  },
+  {
+    "id": "M8.social.cards_present",
+    "module": "M8",
+    "title": "Open Graph and Twitter Card tags are implemented",
+    "status": "pass",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "og:type, og:url, og:title, og:description, og:image, og:locale, og:site_name, twitter:card, twitter:title, twitter:description, and twitter:image are all present."
+    },
+    "expected": "Social card tags should be present for sharing previews.",
+    "recommendation": "Keep tags; fix og:url domain mismatch and add image dimensions + twitter site handle.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "og and twitter tags present",
+      "reproduce": "grep -n 'property=\"og:' index.html && grep -n 'name=\"twitter:' index.html"
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "high",
+      "magnitude": "low",
+      "rationale": "Complete social tags enable rich previews when the URL is shared."
+    }
+  },
+  {
+    "id": "M8.social.url_mismatch",
+    "module": "M8",
+    "title": "Open Graph URL points to a different domain than the served page",
+    "status": "fail",
+    "severity": 3,
+    "scope": "page",
+    "evidence": {
+      "observed": "og:url is set to https://sarconx.it/ while the page is served from the definitive domain https://sarconx.com/ and sarconx.it does not resolve."
+    },
+    "expected": "og:url should reference the definitive, shareable URL https://sarconx.com/.",
+    "recommendation": "Update og:url to https://sarconx.com/ and verify og:image is hosted on sarconx.com.",
+    "fixable": "auto",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "og_url === https://sarconx.com/",
+      "reproduce": "curl -s https://sarconx.com/ | grep \"property=\"og:url\"\""
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "high",
+      "magnitude": "medium",
+      "rationale": "A mismatched og:url can cause social platforms to attribute shares and engagement to the wrong domain."
+    }
+  },
+  {
+    "id": "M8.social.image_unverifiable",
+    "module": "M8",
+    "title": "Social image URL cannot be verified at this tier",
+    "status": "needs_api",
+    "severity": 2,
+    "scope": "page",
+    "evidence": {
+      "observed": "og:image and twitter:image reference https://sarconx.it/og-image.jpg. No external fetch is available at tier 0."
+    },
+    "expected": "Social image should exist, be accessible, and meet minimum dimensions (1200x630 recommended).",
+    "recommendation": "Verify the image exists and is at least 1200x630 px. Add og:image:width, og:image:height, and a fallback image hosted on the same origin.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "manual_review",
+      "assertion": "image returns 200 and dimensions >= 1200x630",
+      "reproduce": "curl -I https://sarconx.it/og-image.jpg"
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "medium",
+      "magnitude": "medium",
+      "rationale": "Missing or incorrectly sized social images produce poor share previews, reducing engagement."
+    }
+  },
+  {
+    "id": "M9.images.no_photographic_images",
+    "module": "M9",
+    "title": "No photographic or illustrative images are present on the page",
+    "status": "warn",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "No <img>, <picture>, or <video> elements are present. Visual content consists of inline SVG favicon, Iconify icons, CSS gradients, and a Google Maps iframe."
+    },
+    "expected": "Local-business landing pages typically include team, office, or client-work imagery with descriptive alt text.",
+    "recommendation": "Consider adding relevant images with descriptive alt attributes. If intentionally omitted, this is a stylistic choice.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "img_count >= 0",
+      "reproduce": "grep -c '<img' index.html"
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "low",
+      "magnitude": "low",
+      "rationale": "Lack of images may reduce visual engagement and E-E-A-T signals for a local service business."
+    }
+  },
+  {
+    "id": "M9.images.iframe_lazy",
+    "module": "M9",
+    "title": "Embedded Google Maps iframe uses lazy loading",
+    "status": "pass",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "Footer Google Maps iframe includes loading=\"lazy\" and a descriptive title."
+    },
+    "expected": "Third-party iframes should be lazy-loaded to avoid blocking initial page render.",
+    "recommendation": "Maintain as-is. Consider adding a placeholder or facade for further performance improvement.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "iframe has loading=lazy",
+      "reproduce": "grep -n 'google.com/maps/embed' index.html"
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "high",
+      "magnitude": "low",
+      "rationale": "Lazy loading the map defers non-critical third-party resources, improving initial render performance."
+    }
+  },
+  {
+    "id": "M10.internal_links.broken_paths",
+    "module": "M10",
+    "title": "Internal links reference non-existent paths",
+    "status": "fail",
+    "severity": 4,
+    "scope": "page",
+    "evidence": {
+      "observed": "Root-relative paths /portfolio, /agent-operativita, /automazione-ai, /privacy-policy, /cookie-policy, /termini-condizioni and others are linked but return 404."
+    },
+    "expected": "Every internal link should resolve to an existing page returning HTTP 200.",
+    "recommendation": "Create missing pages or convert links to in-page anchors. Legal pages must exist and be reachable.",
+    "fixable": "proposed",
+    "verification": {
+      "method": "link_graph",
+      "assertion": "all_internal_links_return_200",
+      "reproduce": "for path in /portfolio /agent-operativita /privacy-policy /cookie-policy /termini-condizioni; do curl -o /dev/null -s -w \"${path}: %{http_code}\\n\" https://sarconx.com$path; done"
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "high",
+      "magnitude": "high",
+      "rationale": "Broken links waste crawl budget, leak PageRank to 404s, and harm user trust."
+    }
+  },
+  {
+    "id": "M10.internal_links.social_dummy",
+    "module": "M10",
+    "title": "Social media footer links use empty href=\"#\" anchors",
+    "status": "fail",
+    "severity": 2,
+    "scope": "page",
+    "evidence": {
+      "observed": "LinkedIn, Instagram, and Twitter/X icons in the footer link to href=\"#\" despite JSON-LD sameAs referencing linkedin.com/company/sarconx and instagram.com/sarconx."
+    },
+    "expected": "Social profile links should point to the real brand profiles.",
+    "recommendation": "Replace href=\"#\" with actual profile URLs or remove the icons if profiles do not exist.",
+    "fixable": "auto",
+    "verification": {
+      "method": "link_graph",
+      "assertion": "social_links_do_not_use_hash_only_href",
+      "reproduce": "grep -n 'mdi:linkedin\\|mdi:instagram\\|mdi:twitter' index.html"
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "high",
+      "magnitude": "medium",
+      "rationale": "Dummy social links create broken UX and reduce trust signals; real profiles support E-E-A-T."
+    }
+  },
+  {
+    "id": "M10.internal_links.anchor_ok",
+    "module": "M10",
+    "title": "Primary page sections are linked via in-page anchors",
+    "status": "pass",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "Navigation and CTA links use valid fragment identifiers (#servizi, #about, #dati, #agenti, #contatti)."
+    },
+    "expected": "Single-page sites should use anchor links to navigate between sections.",
+    "recommendation": "Maintain anchor links; ensure each target id exists.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "all_anchor_targets_exist",
+      "reproduce": "grep -n 'id=\"servizi\"\\|id=\"about\"\\|id=\"dati\"\\|id=\"agenti\"\\|id=\"contatti\"' index.html"
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "high",
+      "magnitude": "low",
+      "rationale": "Anchor links improve UX and allow search engines to identify distinct page sections."
+    }
+  },
+  {
+    "id": "M15.cwv.needs_api",
+    "module": "M15",
+    "title": "Core Web Vitals metrics require PageSpeed Insights or CrUX API",
+    "status": "needs_api",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "Tier 0 environment; no PSI, CrUX, or runtime performance data is available. Render-blocking external styles.css and Google Fonts CSS, plus an external Iconify script, are present in the head."
+    },
+    "expected": "LCP, INP, and CLS should meet the 'good' thresholds (LCP <2.5 s, INP <200 ms, CLS <0.1).",
+    "recommendation": "Run PageSpeed Insights and CrUX to obtain field and lab metrics. Meanwhile, inline critical CSS, preload key fonts, defer non-critical scripts, and self-host fonts.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "psi_api",
+      "assertion": "lcp < 2.5 && inp < 200 && cls < 0.1",
+      "reproduce": "curl -s 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://sarconx.com/&category=PERFORMANCE&strategy=MOBILE' | jq '.lighthouseResult.audits'"
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "medium",
+      "magnitude": "medium",
+      "rationale": "Core Web Vitals are a confirmed ranking factor for mobile search; poor performance can reduce rankings and increase bounce rates."
+    }
+  },
+  {
+    "id": "M17.sitemap.missing",
+    "module": "M17",
+    "title": "XML sitemap is missing",
+    "status": "fail",
+    "severity": 3,
+    "scope": "site",
+    "evidence": {
+      "observed": "sitemap.xml returns 404; no sitemap is linked from robots.txt or the page."
+    },
+    "expected": "A valid XML sitemap should exist at /sitemap.xml listing all indexable URLs and referenced from robots.txt.",
+    "recommendation": "Create /sitemap.xml containing https://sarconx.com/ and any other live pages. Reference it in /robots.txt.",
+    "fixable": "auto",
+    "verification": {
+      "method": "xml_parse",
+      "assertion": "sitemap_xml_returns_200_with_valid_urls",
+      "reproduce": "curl -I https://sarconx.com/sitemap.xml"
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "high",
+      "magnitude": "medium",
+      "rationale": "A sitemap accelerates discovery and indexing, especially for a new or low-authority domain."
+    }
+  },
+  {
+    "id": "M5.schema.searchaction_without_search_engine",
+    "module": "M5",
+    "title": "WebSite SearchAction points to a non-existent site search",
+    "status": "fail",
+    "severity": 2,
+    "scope": "site",
+    "evidence": {
+      "observed": "WebSite entity declares SearchAction with target 'https://sarconx.it/?s={search_term_string}'. The site has no search form or search results page."
+    },
+    "expected": "SearchAction markup should only be present when a working search-results page exists at the declared target.",
+    "recommendation": "Remove the SearchAction block, or implement a real search engine and verify it returns results before marking it up.",
+    "fixable": "auto",
+    "verification": {
+      "method": "schema_validator",
+      "assertion": "WebSite potentialAction SearchAction is absent or points to a working search endpoint",
+      "reproduce": "node -e \"const h=require('fs').readFileSync('index.html','utf8'); const s=h.indexOf('<script type=\\\"application/ld+json\\\">'); const e=h.indexOf('</script>',s); const g=JSON.parse(h.slice(s+35,e))['@graph']; const ws=g.find(n=>n['@type']==='WebSite'); console.log(ws.potentialAction)\""
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "medium",
+      "magnitude": "medium",
+      "rationale": "Invalid SearchAction can mislead search engines and may be ignored or penalized in structured-data evaluation."
+    }
+  },
+  {
+    "id": "M5.schema.missing_review_markup",
+    "module": "M5",
+    "title": "Customer testimonials are not marked up as Review entities",
+    "status": "warn",
+    "severity": 2,
+    "scope": "page",
+    "evidence": {
+      "observed": "Page contains three 5-star testimonials with quotes and author initials, but the @graph has no Review entities."
+    },
+    "expected": "If testimonials are genuine and consent is obtained, they should be expressed as Review markup.",
+    "recommendation": "Add Review nodes for each testimonial with author Person, reviewRating, reviewBody and publisher SarconX. Obtain full reviewer names and consent.",
+    "fixable": "proposed",
+    "verification": {
+      "method": "schema_validator",
+      "assertion": "Review node count matches visible testimonials",
+      "reproduce": "node -e \"const h=require('fs').readFileSync('index.html','utf8'); const s=h.indexOf('<script type=\\\"application/ld+json\\\">'); const e=h.indexOf('</script>',s); const g=JSON.parse(h.slice(s+35,e))['@graph']; console.log('Review nodes:', g.filter(n=>n['@type']==='Review').length)\""
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "medium",
+      "magnitude": "medium",
+      "rationale": "Review markup provides social proof context to search and AI systems, supporting local business credibility."
+    }
+  },
+  {
+    "id": "M5.schema.service_missing_name",
+    "module": "M5",
+    "title": "Service entity lacks a required name property",
+    "status": "warn",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "The Service node has @type, serviceType, provider, areaServed and hasOfferCatalog but no name property."
+    },
+    "expected": "Every Service entity should include a human-readable name.",
+    "recommendation": "Add a name property such as 'Servizi SarconX' or 'AI Automation Services' to the Service node.",
+    "fixable": "auto",
+    "verification": {
+      "method": "schema_validator",
+      "assertion": "Service.name is defined",
+      "reproduce": "node -e \"const h=require('fs').readFileSync('index.html','utf8'); const s=h.indexOf('<script type=\\\"application/ld+json\\\">'); const e=h.indexOf('</script>',s); const g=JSON.parse(h.slice(s+35,e))['@graph']; const svc=g.find(n=>n['@type']==='Service'); console.log('Service name:', svc.name)\""
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "high",
+      "magnitude": "low",
+      "rationale": "A missing name weakens the Service entity's ability to match service-related queries."
+    }
+  },
+  {
+    "id": "M19.localbusiness.unverifiable_aggregate_rating",
+    "module": "M19",
+    "title": "LocalBusiness aggregateRating lacks verifiable on-page evidence",
+    "status": "warn",
+    "severity": 4,
+    "scope": "page",
+    "evidence": {
+      "observed": "LocalBusiness declares aggregateRating ratingValue 4.9, reviewCount 47. The @graph contains no Review entities, only three anonymous testimonials, and no link to a third-party review platform."
+    },
+    "expected": "AggregateRating should be supported by real, accessible reviews or a verified external profile to comply with structured-data guidelines.",
+    "recommendation": "Either add Review markup for visible testimonials and source the 47 reviews from a real dataset, or remove aggregateRating until evidence is published.",
+    "fixable": "proposed",
+    "verification": {
+      "method": "schema_validator",
+      "assertion": "aggregateRating is either removed or backed by Review nodes or external review platform link",
+      "reproduce": "node -e \"const h=require('fs').readFileSync('index.html','utf8'); const s=h.indexOf('<script type=\\\"application/ld+json\\\">'); const e=h.indexOf('</script>',s); const g=JSON.parse(h.slice(s+35,e))['@graph']; const lb=g.find(n=>Array.isArray(n['@type'])?n['@type'].includes('LocalBusiness'):n['@type']==='LocalBusiness'); console.log('aggregateRating:', lb.aggregateRating); console.log('Review nodes:', g.filter(n=>n['@type']==='Review').length)\""
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "high",
+      "magnitude": "medium",
+      "rationale": "Unsubstantiated ratings can be ignored by search quality systems and may risk rich-result penalties."
+    }
+  },
+  {
+    "id": "M19.localbusiness.missing_recommended_fields",
+    "module": "M19",
+    "title": "LocalBusiness missing hasMap, vatID and contactPoint",
+    "status": "warn",
+    "severity": 2,
+    "scope": "page",
+    "evidence": {
+      "observed": "Footer exposes P.IVA 02838240188, a Google Maps embed, and WhatsApp/phone/email. LocalBusiness has address/geo but no hasMap, vatID, or contactPoint."
+    },
+    "expected": "LocalBusiness should include hasMap, vatID/taxID, and a contactPoint to strengthen local-panel and entity signals.",
+    "recommendation": "Add hasMap linking to the Google Maps URL, vatID 'IT02838240188', and a contactPoint for customer service.",
+    "fixable": "auto",
+    "verification": {
+      "method": "schema_validator",
+      "assertion": "hasMap, vatID and contactPoint are present in LocalBusiness",
+      "reproduce": "node -e \"const h=require('fs').readFileSync('index.html','utf8'); const s=h.indexOf('<script type=\\\"application/ld+json\\\">'); const e=h.indexOf('</script>',s); const g=JSON.parse(h.slice(s+35,e))['@graph']; const lb=g.find(n=>Array.isArray(n['@type'])?n['@type'].includes('LocalBusiness'):n['@type']==='LocalBusiness'); console.log({hasMap: lb.hasMap, vatID: lb.vatID, contactPoint: lb.contactPoint})\""
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "medium",
+      "magnitude": "medium",
+      "rationale": "These fields strengthen local business verification and improve chances of appearing in local panels and AI entity summaries."
+    }
+  },
+  {
+    "id": "M13.date.homepage_missing",
+    "module": "M13",
+    "title": "Homepage lacks visible and schema publication/update dates",
+    "status": "fail",
+    "severity": 2,
+    "scope": "page",
+    "evidence": {
+      "observed": "No datePublished or dateModified fields are present in the WebPage schema; no visible <time> element or 'Ultimo aggiornamento' text appears in the body."
+    },
+    "expected": "The WebPage JSON-LD should include datePublished and dateModified, and a visible last-updated date should be rendered on the page.",
+    "recommendation": "Add datePublished and dateModified to the WebPage schema and display an 'Ultimo aggiornamento: [data]' line in the footer.",
+    "fixable": "auto",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "datePublished or dateModified is present in WebPage schema and a visible update date is present",
+      "reproduce": "grep -P '(?i)date(Published|Modified)' index.html && grep -P '(?i)ultimo aggiornamento|pubblicato il' index.html"
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "medium",
+      "magnitude": "small",
+      "rationale": "Freshness signals help search engines assess page currency and may improve crawl prioritization."
+    }
+  },
+  {
+    "id": "M16.author.credentials_missing",
+    "module": "M16",
+    "title": "No named authors, founders, or verifiable team credentials",
+    "status": "fail",
+    "severity": 4,
+    "scope": "page",
+    "evidence": {
+      "observed": "About section states 'SarconX nasce dall'idea di due cofounder' but provides no names, photos, LinkedIn profiles, or bios. Claims such as '10+ Anni Industria' are generic and unattributed."
+    },
+    "expected": "Named founders/team members with job titles, relevant experience, certifications, and links to credible profiles.",
+    "recommendation": "Add a Team or expanded 'Chi Siamo' section with real names, headshots, professional bios, and LinkedIn links; add founder/author schema entities.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "manual_review",
+      "assertion": "Founder/author names and credentials are present in body and schema",
+      "reproduce": "grep -n -i 'cofounder\\|autore\\|author\\|fondatori\\|team\\|linkedin.com/in' index.html | head -20"
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "high",
+      "magnitude": "medium",
+      "rationale": "For a B2B service with ROI claims, named expertise and authority are core E-E-A-T signals."
+    }
+  },
+  {
+    "id": "M16.trust.performance_claims_unsubstantiated",
+    "module": "M16",
+    "title": "Self-reported performance claims lack methodology or case-study evidence",
+    "status": "fail",
+    "severity": 3,
+    "scope": "page",
+    "evidence": {
+      "observed": "Trust badges claim '+300% Efficienza Operativa Media', '47 Giorni ROI Medio', '95% Riduzione Errori Umani'. FAQ repeats these figures. No methodology, sample-size disclosure, or case-study links support them."
+    },
+    "expected": "Quantified performance claims should cite methodology, sample size, time period, and link to anonymized case studies.",
+    "recommendation": "Add a Case Study page, footnotes with sample size/period, or link each badge to a relevant project result.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "manual_review",
+      "assertion": "Performance badges and FAQ ROI claims have source or methodology link",
+      "reproduce": "grep -n -A1 -B1 'Efficienza Operativa Media\\|Giorni ROI Medio\\|Riduzione Errori Umani' index.html"
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "medium",
+      "magnitude": "medium",
+      "rationale": "Unsupported marketing claims weaken trust, increase scrutiny risk, and reduce conversion credibility."
+    }
+  },
+  {
+    "id": "M16.transparency.legal_name_mismatch",
+    "module": "M16",
+    "title": "Legal business name inconsistent between schema and privacy policy",
+    "status": "fail",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "Schema LocalBusiness legalName is 'SarconX'. /privacy-policy page lists data controller as 'SarconX S.r.l.' with P.IVA 02838240188."
+    },
+    "expected": "Schema legalName should match the official registered name 'SarconX S.r.l.'.",
+    "recommendation": "Update schema legalName to 'SarconX S.r.l.' and add it to the footer with registered office/REA if available.",
+    "fixable": "auto",
+    "verification": {
+      "method": "schema_validator",
+      "assertion": "Schema legalName equals the official legal name",
+      "reproduce": "grep -n 'legalName' index.html && curl -s 'https://sarconx.com/privacy-policy' | grep -i 'SarconX S.r.l.'"
+    },
+    "expected_impact": {
+      "axis": "search",
+      "confidence": "medium",
+      "magnitude": "small",
+      "rationale": "Consistent legal identity strengthens entity recognition in Google's Knowledge Graph and local business trust."
+    }
+  },
+  {
+    "id": "M11.faq.extractable",
+    "module": "M11",
+    "title": "FAQ section provides self-contained, question-shaped answer blocks",
+    "status": "pass",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "Page contains six <details>/<summary> FAQ items and a matching JSON-LD FAQPage with Question/Answer pairs."
+    },
+    "expected": "FAQ content should remain question-shaped, self-contained, and marked up with FAQPage schema.",
+    "recommendation": "Add id attributes to each <details> element and expose anchor links so specific answers can be cited directly.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "FAQ details elements and FAQPage schema are present",
+      "reproduce": "grep -c '<details' index.html && grep 'FAQPage' index.html"
+    },
+    "expected_impact": {
+      "axis": "ai",
+      "confidence": "high",
+      "magnitude": "high",
+      "rationale": "Question-answer pairs in both HTML and schema are highly extractable and likely to be surfaced as direct answers by AI search engines."
+    }
+  },
+  {
+    "id": "M11.services.js_rendered",
+    "module": "M11",
+    "title": "Service cards are injected by JavaScript and absent from static HTML",
+    "status": "fail",
+    "severity": 3,
+    "scope": "page",
+    "evidence": {
+      "observed": "Services slider container is empty in raw HTML. The six service cards and their descriptions are only defined inside inline JavaScript and rendered at runtime."
+    },
+    "expected": "Core service content should be present in the initial HTML so static crawlers and AI retrieval snapshots can extract it.",
+    "recommendation": "Server-side render the service cards, or add a static <noscript> list of services inside the slider container.",
+    "fixable": "proposed",
+    "verification": {
+      "method": "render_diff",
+      "assertion": "raw_html contains service card content inside #serviceTrack",
+      "reproduce": "grep 'Automazione Flussi AI' index.html && grep 'serviceTrack'></div>' index.html"
+    },
+    "expected_impact": {
+      "axis": "ai",
+      "confidence": "high",
+      "magnitude": "medium",
+      "rationale": "AI crawlers that do not execute JS may miss primary service descriptions, reducing retrieval coverage."
+    }
+  },
+  {
+    "id": "M12.industry_stats.cited",
+    "module": "M12",
+    "title": "Industry statistics are numerous and include source attribution",
+    "status": "pass",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "Data cards cite PwC, Osservatorio AI - Politecnico di Milano 2024, McKinsey, Accenture, and Gartner with labels."
+    },
+    "expected": "Continue providing authoritative, dated source labels for every third-party statistic and ideally link to the original report.",
+    "recommendation": "Turn each source label into an outbound hyperlink to the original study or report.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "manual_review",
+      "assertion": "Third-party statistics have source labels",
+      "reproduce": "grep -E 'PwC|Osservatorio AI|McKinsey|Accenture|Gartner' index.html | wc -l"
+    },
+    "expected_impact": {
+      "axis": "ai",
+      "confidence": "high",
+      "magnitude": "medium",
+      "rationale": "Cited statistics provide factual anchors that make the page a strong candidate for AI citation."
+    }
+  },
+  {
+    "id": "M12.client_claims.unsubstantiated",
+    "module": "M12",
+    "title": "First-party performance claims lack methodology or case-study support",
+    "status": "warn",
+    "severity": 4,
+    "scope": "page",
+    "evidence": {
+      "observed": "Trust badges and testimonials cite +300%, 47 giorni, 95%, 35%, 180%, €240.000 with no visible methodology, sample size, dates, or case-study links."
+    },
+    "expected": "First-party performance claims should be supported by methodology, sample size, time period, and/or links to detailed case studies.",
+    "recommendation": "Create a 'Risultati Clienti' page with anonymized case studies and link the trust badges/testimonials to it.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "manual_review",
+      "assertion": "First-party claims have methodology or case-study links",
+      "reproduce": "grep -E '\\+300%|47 Giorni|95%|35%|180%|240.000' index.html"
+    },
+    "expected_impact": {
+      "axis": "ai",
+      "confidence": "high",
+      "magnitude": "high",
+      "rationale": "AI engines are cautious about citing unsubstantiated marketing claims; without evidence these numbers may be ignored or reduce trust."
+    }
+  },
+  {
+    "id": "M14.meta_robots.permissive",
+    "module": "M14",
+    "title": "Robots meta tag is permissive for indexing and AI snippets",
+    "status": "pass",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "<meta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\">. No X-Robots-Tag blocking or noindex directive."
+    },
+    "expected": "The page should remain indexable and allow AI engines to extract snippets, images, and video previews.",
+    "recommendation": "Maintain current robots meta. Consider adding a permissive robots.txt that explicitly allows major AI crawlers.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "dom_assert",
+      "assertion": "robots meta is permissive",
+      "reproduce": "grep 'name=\"robots\"' index.html"
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "high",
+      "magnitude": "low",
+      "rationale": "Permissive robots meta removes a basic barrier to crawling and snippet extraction by both search engines and AI bots."
+    }
+  },
+  {
+    "id": "M14.ai_bots.cdn_unverified",
+    "module": "M14",
+    "title": "CDN-level AI crawler access cannot be verified from snapshot",
+    "status": "needs_api",
+    "severity": 2,
+    "scope": "site",
+    "evidence": {
+      "observed": "Response headers show only Content-Type and Server: Netlify. robots.txt is 404. CDN or WAF rules filtering AI user-agents cannot be inspected from a standard fetch."
+    },
+    "expected": "All major AI crawlers should receive HTTP 200 for the HTML page and critical assets, with no challenge page or block.",
+    "recommendation": "Test fetches using each AI crawler user-agent; publish a robots.txt that explicitly allows AI crawlers.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "manual_review",
+      "assertion": "AI crawler user-agents receive HTTP 200 with no challenge",
+      "reproduce": "curl -A 'Mozilla/5.0 (compatible; GPTBot/1.0; +https://openai.com/gptbot)' -I https://sarconx.com/"
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "medium",
+      "magnitude": "medium",
+      "rationale": "If CDN or WAF blocks AI-specific user-agents, the page cannot be retrieved or cited regardless of content quality."
+    }
+  },
+  {
+    "id": "M6.entity.sameas_limited",
+    "module": "M6",
+    "title": "sameAs links are limited to LinkedIn and Instagram",
+    "status": "warn",
+    "severity": 1,
+    "scope": "page",
+    "evidence": {
+      "observed": "LocalBusiness sameAs lists linkedin.com/company/sarconx and instagram.com/sarconx. No Google Business Profile, Crunchbase, or other authoritative entity references."
+    },
+    "expected": "sameAs should reference verified, canonical profiles that help disambiguate the entity, especially a Google Business Profile tied to the Pavia address.",
+    "recommendation": "Add a Google Business Profile URL and any verified industry-directory profiles. Ensure LinkedIn and Instagram URLs resolve to public, indexed pages.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "manual_review",
+      "assertion": "sameAs includes GBP and other verified profiles",
+      "reproduce": "grep -A 3 '\\\"sameAs\\\"' index.html"
+    },
+    "expected_impact": {
+      "axis": "both",
+      "confidence": "medium",
+      "magnitude": "low",
+      "rationale": "Additional authoritative sameAs links strengthen entity disambiguation and can improve local and AI retrieval confidence."
+    }
+  },
+  {
+    "id": "M21.llms_txt.missing",
+    "module": "M21",
+    "title": "No llms.txt file or link discovered",
+    "status": "fail",
+    "severity": 2,
+    "scope": "site",
+    "evidence": {
+      "observed": "llms.txt returns 404. The HTML <head> contains no <link rel=\"llms-txt\"> tag."
+    },
+    "expected": "The site should provide an /llms.txt file with concise business context, services, contact information, and content guidelines.",
+    "recommendation": "Create /llms.txt and add <link rel=\"llms-txt\" href=\"/llms.txt\"> in the <head>. Keep it factual and citation-friendly.",
+    "fixable": "auto",
+    "verification": {
+      "method": "manual_review",
+      "assertion": "GET /llms.txt returns 200 and head contains llms-txt link",
+      "reproduce": "curl -I https://sarconx.com/llms.txt && grep 'llms-txt' index.html"
+    },
+    "expected_impact": {
+      "axis": "ai",
+      "confidence": "medium",
+      "magnitude": "medium",
+      "rationale": "llms.txt gives AI crawlers an explicit, low-noise signal about the business and services, increasing retrieval and citation accuracy."
+    }
+  },
+  {
+    "id": "M16.transparency.editorial_policy_missing",
+    "module": "M16",
+    "title": "No editorial, correction, or content-review policy disclosed",
+    "status": "fail",
+    "severity": 1,
+    "scope": "site",
+    "evidence": {
+      "observed": "No links to an editorial policy, correction policy, or content-review process appear in the footer or About section."
+    },
+    "expected": "A page or footer link describing how content is created, reviewed, sourced, and corrected.",
+    "recommendation": "Add a brief 'Metodologia e Standard Editoriali' page linked in the footer.",
+    "fixable": "advisory",
+    "verification": {
+      "method": "manual_review",
+      "assertion": "Editorial or correction policy link/text is found",
+      "reproduce": "grep -n -i 'editorial\\|correction\\|revisione\\|correzione\\|metodologia editoriale' index.html"
+    },
+    "expected_impact": {
+      "axis": "ai",
+      "confidence": "low",
+      "magnitude": "small",
+      "rationale": "Editorial transparency signals are increasingly used by AI overview systems to gauge source reliability."
+    }
+  }
+]

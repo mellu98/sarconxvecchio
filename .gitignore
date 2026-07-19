@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# OS junk
+__MACOSX/
+.DS_Store
+Thumbs.db
+
+# Local tooling / AI / deploy config
+.claude/
+.netlify/
+
+# QA scratch folders
+.qa-*/
+
+# Logs
+*.log
+
+# Env files (just in case)
+.env
+.env.*

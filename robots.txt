@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Major AI crawlers are explicitly allowed to fetch content
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://sarconx.com/sitemap.xml

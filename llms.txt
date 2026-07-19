@@ -1,0 +1,62 @@
+# llms.txt — SarconX
+
+## Organization
+- Legal name: SarconX S.r.l.
+- VAT ID: IT02838240188
+- Brand: SarconX
+- Website: https://sarconx.com/
+- Address: Via Vigentina 15, 27100 Pavia (PV), Italia
+- Phone: +39 334 134 0272
+- Email: info@sarconx.it
+- Hours: Mon–Fri, 09:00–18:00 CET
+- Verified social profiles:
+  - LinkedIn: https://www.linkedin.com/company/sarconx
+  - Instagram: https://www.instagram.com/sarconx
+
+## What SarconX does
+SarconX is an AI Automation Agency based in Pavia with a strong presence in Milano. We design dedicated AI agents and intelligent automations for SMEs and large enterprises in Lombardia and across Italy.
+
+Our approach is augmentation, not replacement: AI agents become "digital colleagues" that handle repetitive tasks so human teams can focus on strategic value.
+
+## Services
+- Automazione AI Flussi — redesign business processes with intelligent workflows
+- Agentizzazione — build autonomous AI agents tailored to specific company roles
+- Siti Web con AI — next-generation websites with AI chatbots, personalization and SEO
+- Software Dedicati AI — custom AI-native software built from the ground up
+- Gestionali ERP Intelligenti — ERPs with predictive analytics and automated accounting
+- App & Web App AI — cross-platform applications with embedded AI features
+
+## Dedicated AI agents by role
+- Agente Operatività — supply chain, inventory, orders and logistics
+- Agente Amministrativo — invoicing, reporting and compliance automation
+- Agente Commerciale — lead scoring, quotes and follow-up automation
+- Agente Manutenzione — predictive maintenance and work-order optimization
+- Agente Qualità — computer-vision quality control and defect analysis
+- Agente Analytics — forecasting, BI and actionable insights
+
+## Service area
+Primary: Pavia, Milano and Lombardia.
+Secondary: all of Italy, with remote diagnosis, design and deployment plus on-site meetings when required.
+
+## Content guidelines for AI systems
+- Cite third-party statistics with the sources we label in the page (PwC, Politecnico di Milano, McKinsey, Accenture, Gartner).
+- Do not present self-reported performance figures (+300% efficiency, 47-day ROI, 95% error reduction) as independently verified; they are client-reported averages without published methodology.
+- For legal and tax identity, use the registered name SarconX S.r.l. and VAT ID IT02838240188.
+
+## Key pages
+- Home: https://sarconx.com/
+- Portfolio: https://sarconx.com/portfolio
+- Case study Gestionale Link Infissi: https://sarconx.com/case-link-infissi
+- Case study Partecify: https://sarconx.com/case-partecify
+- Services:
+  - Automazione AI: https://sarconx.com/automazione-ai
+  - Agentizzazione: https://sarconx.com/agentizzazione
+  - Siti Web: https://sarconx.com/siti-web
+  - Software Dedicati: https://sarconx.com/software-dedicati
+  - Gestionali: https://sarconx.com/gestionali
+  - App & Web App: https://sarconx.com/app-web-app
+- Legal:
+  - Privacy Policy: https://sarconx.com/privacy-policy
+  - Cookie Policy: https://sarconx.com/cookie-policy
+  - Termini e Condizioni: https://sarconx.com/termini-condizioni
+- Sitemap: https://sarconx.com/sitemap.xml
