@@ -19,3 +19,4 @@ Thumbs.db
 # Env files (just in case)
 .env
 .env.*
+.atl/

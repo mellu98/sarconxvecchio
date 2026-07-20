@@ -44,17 +44,14 @@ Secondary: all of Italy, with remote diagnosis, design and deployment plus on-si
 - For legal and tax identity, use the registered name SarconX S.r.l. and VAT ID IT02838240188.
 
 ## Key pages
-- Home: https://sarconx.com/
-- Portfolio: https://sarconx.com/portfolio
-- Case study Gestionale Link Infissi: https://sarconx.com/case-link-infissi
-- Case study Partecify: https://sarconx.com/case-partecify
-- Services:
-  - Automazione AI: https://sarconx.com/automazione-ai
-  - Agentizzazione: https://sarconx.com/agentizzazione
-  - Siti Web: https://sarconx.com/siti-web
-  - Software Dedicati: https://sarconx.com/software-dedicati
-  - Gestionali: https://sarconx.com/gestionali
-  - App & Web App: https://sarconx.com/app-web-app
+- Home (single-page: servizi, metodo, lavori, contatti): https://sarconx.com/
+- Case studies:
+  - Gestionale Link Infissi: https://sarconx.com/case-link-infissi
+  - Partecify: https://sarconx.com/case-partecify
+  - E-commerce Grissinciok: https://sarconx.com/case-ecommerce
+  - Mail Scraper: https://sarconx.com/case-mail-scraper
+  - Sito Mood Beauty Lab: https://sarconx.com/case-siti-web
+  - Emozioni da Gustare: https://sarconx.com/case-emozioni-da-gustare
 - Legal:
   - Privacy Policy: https://sarconx.com/privacy-policy
   - Cookie Policy: https://sarconx.com/cookie-policy

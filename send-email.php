@@ -48,7 +48,7 @@ if (!empty($input['website'])) {
     exit;
 }
 
-$to      = 'info@sarconx.com';
+$to      = 'info@sarconx.it';
 $subject = 'Richiesta consulenza dal sito SarconX';
 $boundary = md5(time());
 
