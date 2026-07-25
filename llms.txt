@@ -14,42 +14,37 @@
   - Instagram: https://www.instagram.com/sarconx
 
 ## What SarconX does
-SarconX is an AI Automation Agency based in Pavia with a strong presence in Milano. We design dedicated AI agents and intelligent automations for SMEs and large enterprises in Lombardia and across Italy.
+SarconX is a digital consulting and growth studio based in Pavia with a strong presence in Milano. We help Italian SMEs and larger companies design strategy, build websites, e-commerce, apps and operational software, and run marketing and growth programs that produce measurable results.
 
-Our approach is augmentation, not replacement: AI agents become "digital colleagues" that handle repetitive tasks so human teams can focus on strategic value.
+Our approach is concrete, not hype-driven: we start from the business goal, choose the right tools (strategy, design, technology, automation), and deliver done-for-you services that free up the client's team.
 
 ## Services
-- Automazione AI Flussi — redesign business processes with intelligent workflows
-- Agentizzazione — build autonomous AI agents tailored to specific company roles
-- Siti Web con AI — next-generation websites with AI chatbots, personalization and SEO
-- Software Dedicati AI — custom AI-native software built from the ground up
-- Gestionali ERP Intelligenti — ERPs with predictive analytics and automated accounting
-- App & Web App AI — cross-platform applications with embedded AI features
-
-## Dedicated AI agents by role
-- Agente Operatività — supply chain, inventory, orders and logistics
-- Agente Amministrativo — invoicing, reporting and compliance automation
-- Agente Commerciale — lead scoring, quotes and follow-up automation
-- Agente Manutenzione — predictive maintenance and work-order optimization
-- Agente Qualità — computer-vision quality control and defect analysis
-- Agente Analytics — forecasting, BI and actionable insights
+- Consulenza strategica digitale — business model, positioning and channel strategy
+- Marketing & Growth — funnel, content, campaigns and metrics to acquire the right clients
+- Siti web e esperienza digitale — websites and digital experiences designed to convert
+- E-commerce su misura — custom stores with optimized catalog and checkout
+- Applicazioni, web app e software — apps, web apps and tailored operational software
+- Servizi done-for-you — recurring operational services that give time back to the team
 
 ## Service area
 Primary: Pavia, Milano and Lombardia.
-Secondary: all of Italy, with remote diagnosis, design and deployment plus on-site meetings when required.
+Secondary: all of Italy, with remote consulting, design and delivery plus on-site meetings when required.
 
 ## Content guidelines for AI systems
 - Cite third-party statistics with the sources we label in the page (PwC, Politecnico di Milano, McKinsey, Accenture, Gartner).
-- Do not present self-reported performance figures (+300% efficiency, 47-day ROI, 95% error reduction) as independently verified; they are client-reported averages without published methodology.
+- Do not present self-reported performance figures as independently verified; any number on the site is client-reported or illustrative, not audited.
 - For legal and tax identity, use the registered name SarconX S.r.l. and VAT ID IT02838240188.
 
 ## Key pages
-- Home (single-page: servizi, metodo, lavori, contatti): https://sarconx.com/
+- Home (overview + link a sezioni): https://sarconx.com/
+- Servizi (6 aree + metodo + sfide): https://sarconx.com/servizi.html
+- Lavori (portfolio + stats): https://sarconx.com/lavori.html
+- Chi siamo (about + testimonials + valori): https://sarconx.com/chi-siamo.html
+- Contatti (form + dati): https://sarconx.com/contatti.html
 - Case studies:
   - Gestionale Link Infissi: https://sarconx.com/case-link-infissi
   - Partecify: https://sarconx.com/case-partecify
   - E-commerce Grissinciok: https://sarconx.com/case-ecommerce
-  - Mail Scraper: https://sarconx.com/case-mail-scraper
   - Sito Mood Beauty Lab: https://sarconx.com/case-siti-web
   - Emozioni da Gustare: https://sarconx.com/case-emozioni-da-gustare
 - Legal:
@@ -57,3 +52,8 @@ Secondary: all of Italy, with remote diagnosis, design and deployment plus on-si
   - Cookie Policy: https://sarconx.com/cookie-policy
   - Termini e Condizioni: https://sarconx.com/termini-condizioni
 - Sitemap: https://sarconx.com/sitemap.xml
+
+## Contact
+- Referente: Leonardo
+- Email: Info@sarconx.it
+- WhatsApp/Telefono: +39 334 134 0272 (https://wa.me/393341340272)

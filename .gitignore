@@ -9,6 +9,7 @@ Thumbs.db
 # Local tooling / AI / deploy config
 .claude/
 .netlify/
+.codegraph/
 
 # QA scratch folders
 .qa-*/
@@ -20,3 +21,6 @@ Thumbs.db
 .env
 .env.*
 .atl/
+
+# Stray source assets (logo in use is assets/brand/sarconx-logo.png)
+/logo.png

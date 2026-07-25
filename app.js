@@ -1,7 +1,7 @@
 /* ============================================================
    SARCONX — app.js
    Nav, mobile menu, reveals, ticker, spotlight cards,
-   functions selector, cookie consent, contact form.
+   cookie consent, contact form.
    ============================================================ */
 (function () {
   'use strict';
@@ -32,16 +32,66 @@
   });
 
   /* ---------- scroll reveals ---------- */
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var reveals = document.querySelectorAll('.rv');
   if ('IntersectionObserver' in window) {
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); }
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
     reveals.forEach(function (el) { obs.observe(el); });
   } else {
     reveals.forEach(function (el) { el.classList.add('on'); });
+  }
+
+  /* ---------- animated number counters ---------- */
+  var countEls = document.querySelectorAll('.stat b[data-count]');
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+  function animateCount(el) {
+    var target = parseFloat(el.getAttribute('data-count'));
+    var suffix = el.getAttribute('data-suffix') || '';
+    if (reducedMotion) { el.textContent = target + suffix; return; }
+    var duration = 1400;
+    var startTime = null;
+    function frame(now) {
+      if (!startTime) startTime = now;
+      var p = Math.min((now - startTime) / duration, 1);
+      var val = Math.floor(easeOutCubic(p) * target);
+      el.textContent = val + suffix;
+      if (p < 1) requestAnimationFrame(frame);
+      else el.textContent = target + suffix;
+    }
+    requestAnimationFrame(frame);
+  }
+  if (countEls.length) {
+    if ('IntersectionObserver' in window) {
+      var countObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { animateCount(e.target); countObs.unobserve(e.target); }
+        });
+      }, { threshold: 0.3 });
+      countEls.forEach(function (el) { countObs.observe(el); });
+    } else {
+      countEls.forEach(animateCount);
+    }
+  }
+
+  /* ---------- hero shape parallax ---------- */
+  var heroShape = document.querySelector('.hero-shape');
+  if (heroShape && !reducedMotion) {
+    var ticking = false;
+    function updateHeroShape() {
+      var offset = window.scrollY * 0.08;
+      heroShape.style.transform = 'translateY(' + offset + 'px)';
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        requestAnimationFrame(updateHeroShape);
+        ticking = true;
+      }
+    }, { passive: true });
   }
 
   /* ---------- ticker: duplicate content for seamless loop ---------- */
@@ -56,91 +106,6 @@
       card.style.setProperty('--my', (e.clientY - r.top) + 'px');
     });
   });
-
-  /* ============================================================
-     FUNZIONI — business-function selector (drives the diag panel)
-     ============================================================ */
-  var FUNZ = [
-    {
-      id: 'commerciale', label: 'Commerciale',
-      quote: 'I lead arrivano, ma nessuno li qualifica in tempo. I follow-up si perdono tra mail ed Excel, e i preventivi escono sempre troppo tardi.',
-      fix: 'Progettiamo un agente AI che <strong>qualifica ogni lead</strong> appena arriva, prepara offerte personalizzate e gestisce i follow-up su tutti i canali. Il tuo team commerciale parla solo con i prospect che contano davvero.',
-      list: ['Lead scoring predittivo', 'Offerte e preventivi automatici', 'Follow-up multicanale, mai un lead perso'],
-      caseHref: 'case-mail-scraper.html', caseLabel: 'Vedi un caso reale'
-    },
-    {
-      id: 'amministrativo', label: 'Amministrativo',
-      quote: 'Fatture, riconciliazioni e report rubano ore preziose ogni settimana. E un errore umano, prima o poi, costa caro.',
-      fix: 'Automatizziamo <strong>fatturazione, reporting e compliance</strong>: documenti generati e archiviati da soli, riconciliazioni senza errori, scadenze sempre sotto controllo. Il ciclo contabile accelera e l’errore umano sparisce.',
-      list: ['Fatturazione e riconciliazione automatiche', 'Reporting finanziario in tempo reale', 'Compliance e archiviazione documentale'],
-      caseHref: 'case-link-infissi.html', caseLabel: 'Vedi un caso reale'
-    },
-    {
-      id: 'operativita', label: 'Operatività',
-      quote: 'Ordini, scorte e fornitori vivono su sistemi che non si parlano. I ritardi li scopriamo quando è ormai troppo tardi.',
-      fix: 'Un agente che <strong>gestisce ordini, scorte e fornitori</strong> in autonomia: prevede i ritardi prima che accadano, rialloca le risorse e ottimizza i flussi operativi mentre il team si concentra sul valore.',
-      list: ['Gestione ordini e scorte in autonomia', 'Previsione dei ritardi e dei colli di bottiglia', 'Riallocazione automatica delle risorse'],
-      caseHref: 'case-link-infissi.html', caseLabel: 'Vedi un caso reale'
-    },
-    {
-      id: 'qualita', label: 'Qualità',
-      quote: 'Il controllo qualità è manuale e a campione. I difetti, troppo spesso, li trovano i clienti prima di noi.',
-      fix: 'Portiamo la <strong>visione computazionale</strong> in produzione: ispezione continua, difetti rilevati in tempo reale e reportistica qualità generata da sé. Ogni pezzo tracciato, ogni lotto documentato.',
-      list: ['Ispezione continua con computer vision', 'Analisi difetti in tempo reale', 'Reportistica qualità automatica'],
-      caseHref: 'case-partecify.html', caseLabel: 'Vedi un caso reale'
-    },
-    {
-      id: 'manutenzione', label: 'Manutenzione',
-      quote: 'Le macchine si fermano senza preavviso. Ogni fermo non pianificato brucia margine, consegne e fiducia dei clienti.',
-      fix: 'Sensori IoT e modelli predittivi che <strong>anticipano i guasti</strong>: work order generati in automatico, ricambi ottimizzati e fino al 70% di downtime in meno. La manutenzione che paga sé stessa.',
-      list: ['Manutenzione predittiva con IoT + AI', 'Work order generati in automatico', 'Fino al 70% di downtime in meno'],
-      caseHref: 'case-partecify.html', caseLabel: 'Vedi un caso reale'
-    },
-    {
-      id: 'analytics', label: 'Analytics',
-      quote: 'I dati ci sono, sparsi in dieci strumenti diversi. Ma le decisioni continuiamo a prenderle a istinto.',
-      fix: 'Unifichiamo i dati da tutte le fonti aziendali e li trasformiamo in <strong>insight azionabili</strong>: dashboard in tempo reale, forecast con confidenza statistica e anomalie segnalate prima che diventino problemi.',
-      list: ['Dashboard interattive in tempo reale', 'Forecasting con confidenza statistica', 'Anomaly detection e alert automatici'],
-      caseHref: 'case-link-infissi.html', caseLabel: 'Vedi un caso reale'
-    }
-  ];
-
-  var chipsBox = document.getElementById('chips');
-  var qEl = document.getElementById('diagQuote');
-  var fEl = document.getElementById('diagFix');
-  var lEl = document.getElementById('diagList');
-  var cEl = document.getElementById('diagCase');
-  var cLbl = document.getElementById('diagCaseLabel');
-  var bodyEl = document.getElementById('diagBody');
-  var sideEl = document.getElementById('diagSide');
-
-  function renderFunz(item) {
-    qEl.textContent = item.quote;
-    fEl.innerHTML = item.fix;
-    lEl.innerHTML = item.list.map(function (t) { return '<li>' + t + '</li>'; }).join('');
-    cEl.setAttribute('href', item.caseHref);
-    cLbl.textContent = item.caseLabel;
-    [bodyEl, sideEl].forEach(function (el) {
-      el.classList.remove('swap');
-      void el.offsetWidth; /* restart animation */
-      el.classList.add('swap');
-    });
-  }
-
-  FUNZ.forEach(function (item, i) {
-    var b = document.createElement('button');
-    b.className = 'chip';
-    b.type = 'button';
-    b.textContent = item.label;
-    b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
-    b.addEventListener('click', function () {
-      chipsBox.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
-      b.setAttribute('aria-pressed', 'true');
-      renderFunz(item);
-    });
-    chipsBox.appendChild(b);
-  });
-  renderFunz(FUNZ[0]);
 
   /* ============================================================
      COOKIE CONSENT — localStorage key: cookieConsent
@@ -259,10 +224,169 @@
         .then(showSuccess)
         .catch(function () {
           submitBtn.disabled = false;
-          btnLabel.textContent = 'Richiedi la tua analisi gratuita';
-          showError('Invio non riuscito. Riprova tra poco, scrivici su WhatsApp al +39 334 134 0272 o a info@sarconx.it.');
+          btnLabel.textContent = 'Richiedi una consulenza gratuita';
+          showError('Invio non riuscito. Riprova tra poco, scrivici su WhatsApp al +39 334 134 0272 o a Info@sarconx.it.');
         });
     });
+  }
+
+  /* ============================================================
+     CONTACT MODAL — open/close, focus trap, ESC, body scroll lock
+     ============================================================ */
+  var modal = document.getElementById('contactModal');
+  if (modal) {
+    var cmCard = modal.querySelector('.contact-modal-card');
+    var cmTriggers = document.querySelectorAll('[data-contact-trigger]');
+    var cmClosers = document.querySelectorAll('[data-contact-close]');
+    var cmLastFocused = null;
+
+    function openModal() {
+      cmLastFocused = document.activeElement;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+      setTimeout(function () {
+        var first = modal.querySelector('input:not([type=hidden]),textarea,button');
+        if (first) first.focus();
+      }, 60);
+    }
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('no-scroll');
+      if (cmLastFocused && cmLastFocused.focus) cmLastFocused.focus();
+    }
+
+    cmTriggers.forEach(function (t) {
+      t.addEventListener('click', function (e) {
+        e.preventDefault();
+        // close mobile menu if open
+        if (mobileMenu.classList.contains('open')) setMenu(false);
+        openModal();
+      });
+    });
+    cmClosers.forEach(function (c) { c.addEventListener('click', closeModal); });
+
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+
+    /* focus trap inside modal */
+    modal.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      var f = modal.querySelectorAll('input:not([type=hidden]):not([tabindex="-1"]),textarea,button,a[href]');
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
+    /* ---------- modal form submit (nome/telefono/email/messaggio) ---------- */
+    var cmForm = document.getElementById('cmForm');
+    if (cmForm) {
+      var cmMsgBox = document.getElementById('cmFormMsg');
+      var cmEmailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      var cmTelRe = /^[+]?[\d\s().-]{6,}$/;
+
+      function cmShowError(text) {
+        cmMsgBox.textContent = text;
+        cmMsgBox.classList.add('err');
+      }
+      function cmClearError() {
+        cmMsgBox.textContent = '';
+        cmMsgBox.classList.remove('err');
+      }
+
+      cmForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        cmClearError();
+
+        if (cmForm.website && cmForm.website.value) {
+          cmForm.reset();
+          closeModal();
+          return;
+        }
+
+        var nome = cmForm.nome.value.trim();
+        var tel = cmForm.telefono.value.trim();
+        var email = cmForm.email.value.trim();
+        var messaggio = cmForm.messaggio.value.trim();
+
+        if (!nome || !tel || !email || !messaggio) {
+          cmShowError('Compila tutti i campi prima di inviare.');
+          return;
+        }
+        if (!cmEmailRe.test(email)) {
+          cmShowError('Inserisci un indirizzo email valido.');
+          return;
+        }
+        if (!cmTelRe.test(tel)) {
+          cmShowError('Inserisci un numero di telefono valido.');
+          return;
+        }
+
+        var cmBtn = cmForm.querySelector('button[type=submit]');
+        var cmBtnLabel = cmBtn.querySelector('span');
+        var origLabel = cmBtnLabel.textContent;
+        cmBtn.disabled = true;
+        cmBtnLabel.textContent = 'Invio in corso…';
+
+        var payload = { nome: nome, telefono: tel, email: email, messaggio: messaggio };
+
+        function cmTimedFetch(url, options) {
+          var ctrl = new AbortController();
+          var timer = setTimeout(function () { ctrl.abort(); }, 10000);
+          options.signal = ctrl.signal;
+          return fetch(url, options).then(function (res) {
+            clearTimeout(timer);
+            return res;
+          }, function (err) {
+            clearTimeout(timer);
+            throw err;
+          });
+        }
+        function cmPostPhp() {
+          return cmTimedFetch('send-email.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          }).then(function (res) {
+            return res.json().catch(function () { return {}; }).then(function (data) {
+              if (res.ok && data.success === true) return true;
+              throw new Error(data.message || 'php-unavailable');
+            });
+          });
+        }
+        function cmPostNetlify() {
+          var body = new URLSearchParams();
+          body.append('form-name', 'contatti-modal');
+          Object.keys(payload).forEach(function (k) { body.append(k, payload[k]); });
+          return cmTimedFetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: body.toString()
+          }).then(function (res) {
+            if (res.ok) return true;
+            throw new Error('netlify-unavailable');
+          });
+        }
+
+        cmPostPhp()
+          .catch(cmPostNetlify)
+          .then(function () {
+            cmForm.reset();
+            closeModal();
+          })
+          .catch(function () {
+            cmBtn.disabled = false;
+            cmBtnLabel.textContent = origLabel;
+            cmShowError('Invio non riuscito. Scrivici direttamente su WhatsApp al +39 334 134 0272 o a Info@sarconx.it.');
+          });
+      });
+    }
   }
 
   /* ---------- footer year ---------- */

@@ -11,13 +11,13 @@ Due pubblici, pari priorità — il sito deve parlare a entrambi senza perderne 
 1. **PMI lombarde** — piccole e medie imprese italiane che sentono di dover automatizzare ma non sanno da dove iniziare. Decisori spesso non tecnici. Hanno bisogno di vicinanza, casi concreti, ROI tangibile e zero attrito cognitivo. Vogliono fidarsi prima di capire ogni dettaglio tecnico.
 2. **Grandi aziende** — decisori tecnici e figure C-level. Cercano rigore, scala, affidabilità e prove di competenza reale prima di impegnarsi.
 
-**Contesto d'uso**: stanno valutando un partner di automazione AI, spesso scettici verso l'hype sull'intelligenza artificiale. **Job-to-be-done**: capire se SarconX può trasformare concretamente la loro operatività e decidere se richiedere una consulenza (gratuita). La conversione primaria del sito è la richiesta di consulenza.
+**Contesto d'uso**: stanno valutando un partner digitale per crescere, spesso scettici verso l'hype e disorientati dalla quantità di strumenti e consigli. **Job-to-be-done**: capire se SarconX può aiutarli concretamente a capire da dove partire e decidere se richiedere una consulenza (gratuita). La conversione primaria del sito è la richiesta di consulenza.
 
 ## Product Purpose
 
-SarconX è un'AI Automation Agency con sede a Pavia e Milano (Lombardia) che progetta agenti AI dedicati, automazione dei processi aziendali e workflow intelligenti per le imprese italiane. Sei aree di intervento (amministrativo, analytics, commerciale, manutenzione, operatività, qualità) più servizi di siti web, software dedicati e gestionali.
+SarconX è uno studio di consulenza digitale e growth con sede a Pavia e Milano (Lombardia) che aiuta le imprese italiane a costruire crescita concreta: strategia, siti web, e-commerce, app e software operativo, marketing e servizi done-for-you. Sei aree di intervento (consulenza strategica, marketing & growth, siti web, e-commerce, app e software, servizi done-for-you) che partono sempre dal obiettivo di business, non dalla tecnologia.
 
-Il sito esiste per **convertire imprese italiane scettiche in lead qualificati per una consulenza**, dimostrando competenza concreta — non astrazioni, non hype. Nasce dall'esperienza industriale e manageriale reale di due cofondatori ("Roots in Industry"). Successo = un visitatore richiede una consulenza convinto che SarconX produca un cambiamento operativo reale e misurabile.
+Il sito esiste per **convertire imprese italiane scettiche in lead qualificati per una consulenza**, dimostrando competenza concreta — non astrazioni, non hype. Nasce dall'esperienza industriale e manageriale reale dei fondatori ("Roots in Industry"). Successo = un visitatore richiede una consulenza convinto che SarconX produca un cambiamento misurabile.
 
 ## Brand Personality
 
@@ -27,12 +27,12 @@ Tre parole: **affidabile, chiaro, concreto.**
 
 L'autorità si guadagna attraverso l'esperienza operativa e industriale vissuta ("Roots in Industry"), non attraverso buzzword o estetica futuristica. Obiettivo emotivo: il visitatore si sente **capito e rassicurato** ("loro capiscono la mia azienda e mi guideranno"), non abbagliato né messo sotto pressione.
 
-> Nota di tensione progettuale: il sito attuale ha un'estetica fredda e terminal-native (glow neon su nero, monospace ovunque, `sarconx-agent-v3.2.running`). Questo **contraddice** la personalità desiderata. Il redesign deve spostare il sito da "macchina intelligente" a "partner umano competente", senza perdere il rigore tecnico.
+> Nota di tensione progettuale: la prima versione del sito aveva un'estetica fredda e terminal-native (glow neon su nero, monospace ovunque, `sarconx-agent-v3.2.running`) che **contraddiceva** la personalità desiderata. Il redesign (2026) ha spostato il sito da "macchina intelligente" a "partner umano competente" con un palette caldo soft/cream + accento terracotta, senza perdere il rigore tecnico.
 
 ## Anti-references
 
 - **Hype da guru dell'AI (anti-referenza primaria).** Promesse vuote tipo "10x il tuo business", claim gonfiati senza sostanza, rumore da influencer LinkedIn. SarconX vende ingegneria e risultati misurabili, mai hype. Se una frase potrebbe apparire sulla landing di un guru AI, va riscritta.
-- **Il template SaaS clonato (derivata dall'obiettivo di de-AI-ificazione).** Inter per tutto, gradienti viola→blu, gradient text, glow neon su sfondo scuro — attualmente presenti e che tirano il brand verso "generico tool AI" invece di "partner umano e affidabile guidato da persone reali".
+- **Il template SaaS clonato (derivata dall'obiettivo di de-hype-ificazione).** Inter per tutto, gradienti viola→blu, gradient text, glow neon su sfondo scuro — già rimossi nel redesign 2026, da evitare in futuro perché tirerebbero il brand verso "generico tool AI" invece di "partner umano e affidabile guidato da persone reali".
 
 ## Design Principles
 
