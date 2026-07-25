@@ -274,10 +274,10 @@ p {
 	border-top-color: transparent;
 }
 .section-green {
-	background: #e8f5ee;
+	background: var(--bg);
 }
 .section-terracotta {
-	background: #f9eae4;
+	background: var(--bg);
 }
 
 .section-green .challenge-card,
@@ -297,7 +297,7 @@ p {
 	border-bottom-color: var(--line);
 }
 .section-terracotta .svc:hover {
-	background: #f3ddd4;
+	background: rgba(var(--ink-rgb), 0.03);
 }
 
 /* drop cap editoriale */
@@ -783,7 +783,7 @@ p {
 	padding: 1.05rem 0;
 	overflow: hidden;
 	position: relative;
-	background: var(--bg-soft);
+	background: var(--bg);
 }
 .ticker-track {
 	display: flex;
@@ -870,7 +870,7 @@ p {
    FUNZIONI — legacy selector (kept for CSS safety, removed from DOM)
    ============================================================ */
 #funzioni {
-	background: var(--bg-soft);
+	background: var(--bg);
 }
 .chips {
 	display: flex;
@@ -1075,7 +1075,7 @@ p {
    METODO — numerazione serif gigante
    ============================================================ */
 #metodo {
-	background: var(--bg-soft);
+	background: var(--bg);
 }
 .steps {
 	display: grid;
@@ -1301,11 +1301,7 @@ p {
    ============================================================ */
 .stats {
 	border-block: 1px solid var(--line);
-	background: linear-gradient(
-		180deg,
-		rgba(var(--cta-rgb), 0.1) 0%,
-		var(--bg-soft) 60%
-	);
+	background: var(--bg);
 }
 .stats-in {
 	display: grid;
@@ -1418,7 +1414,7 @@ p {
    CHI SIAMO — about strip
    ============================================================ */
 #chi-siamo {
-	background: var(--bg-soft);
+	background: var(--bg);
 }
 .about-grid {
 	display: grid;
@@ -1799,7 +1795,7 @@ p {
 footer {
 	border-top: 1px solid var(--line);
 	padding: 2.6rem 0;
-	background: var(--bg-soft);
+	background: var(--bg);
 }
 .foot {
 	display: flex;
@@ -2070,7 +2066,7 @@ footer {
 
 /* alternating band */
 .band {
-	background: var(--bg-soft);
+	background: var(--bg);
 	border-block: 1px solid var(--line);
 }
 
@@ -2279,24 +2275,24 @@ footer {
 	position: relative;
 	overflow: hidden;
 	text-align: center;
-	border: 1px solid var(--bg-dark);
+	border: 1px solid var(--line);
 	border-radius: 0;
-	background: var(--bg-dark);
-	color: var(--bg);
+	background: var(--bg);
+	color: var(--ink);
 	padding: clamp(2.4rem, 5vw, 4rem) clamp(1.4rem, 4vw, 3rem);
 	box-shadow: none;
 }
 .cta-banner h2 {
 	font-size: clamp(2rem, 4vw, 3rem);
 	font-weight: 400;
-	color: var(--bg);
+	color: var(--ink);
 	margin-bottom: 1rem;
 	position: relative;
 	z-index: 1;
 	font-style: italic;
 }
 .cta-banner p {
-	color: rgba(var(--bg-rgb), 0.78);
+	color: var(--ink-muted);
 	max-width: 56ch;
 	margin: 0 auto 1.9rem;
 	line-height: 1.7;
@@ -2313,12 +2309,12 @@ footer {
 	z-index: 1;
 }
 .cta-banner .btn-ghost {
-	border-color: var(--bg);
-	color: var(--bg);
+	border-color: var(--ink);
+	color: var(--ink);
 }
 .cta-banner .btn-ghost:hover {
-	background: var(--bg);
-	color: var(--ink);
+	background: var(--ink);
+	color: var(--bg);
 }
 
 /* phone gallery (mobile-app case) */
