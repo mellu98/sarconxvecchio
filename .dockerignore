@@ -1,0 +1,27 @@
+# VCS / metadata
+.git
+.gitignore
+.gitattributes
+
+# Local tooling & deploy artifacts (not needed inside the image)
+.netlify/
+.codegraph/
+.atl/
+.qa-*/
+.claude/
+
+# OS junk
+.DS_Store
+__MACOSX/
+Thumbs.db
+
+# Dependencies
+node_modules/
+
+# Logs & env
+*.log
+.env
+.env.*
+
+# Docs not served by the site
+*.md
