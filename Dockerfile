@@ -12,6 +12,9 @@ RUN { \
       echo 'memory_limit = 128M'; \
     } > /usr/local/etc/php/conf.d/sarconx.ini
 
+# 301 redirects for old (removed) pages + custom 404, at server-config level
+COPY apache-redirects.conf /etc/apache2/conf-enabled/sarconx.conf
+
 # Copy the site into the Apache document root
 COPY . /var/www/html/
 
