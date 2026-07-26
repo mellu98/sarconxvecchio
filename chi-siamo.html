@@ -18,6 +18,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script>/* reveals hide content until JS runs; if JS never runs the page must
+   still be readable, so the hidden state is gated behind this class */
+document.documentElement.className+=" js";</script>
 </head>
 <body>
 
@@ -31,10 +34,10 @@
       <a href="servizi.html">Servizi</a>
       <a href="lavori.html">Lavori</a>
       <a href="chi-siamo.html" aria-current="page">Chi siamo</a>
-      <button class="btn btn-volt btn-nav" type="button" data-contact-trigger>
+      <a href="contatti.html" class="btn btn-volt btn-nav" data-contact-trigger>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H7l-3 3V4Z"/></svg>
         <span>Contatta</span>
-      </button>
+      </a>
     </div>
     <button id="menuBtn" aria-label="Apri il menu" aria-expanded="false" aria-controls="mobileMenu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -49,7 +52,7 @@
   <a href="lavori.html">Lavori</a>
   <a href="chi-siamo.html">Chi siamo</a>
   <a href="contatti.html">Contatti</a>
-  <button class="btn btn-volt" type="button" data-contact-trigger>Contattaci ora</button>
+  <a href="contatti.html" class="btn btn-volt" data-contact-trigger>Contattaci ora</a>
 </div>
 
 <main>
@@ -88,75 +91,10 @@
 <!-- ================= STATS ================= -->
 <section class="stats" aria-label="I risultati SarconX in numeri">
   <div class="wrap stats-in">
-    <div class="stat rv"><b>50+</b><span>progetti consegnati</span></div>
-    <div class="stat rv rv-d1"><b>3 settimane</b><span>media per un nuovo sito</span></div>
-    <div class="stat rv rv-d2"><b>PMI</b><span>in Lombardia e Italia</span></div>
-    <div class="stat rv rv-d3"><b>24h</b><span>Consulenza gratuita</span></div>
-  </div>
-</section>
-
-<!-- ================= TESTIMONIANZE ================= -->
-<section id="testimonianze" class="section" aria-label="Testimonianze dei clienti">
-  <div class="wrap">
-    <span class="kicker rv">Dicono di noi</span>
-    <h2 class="h2 rv">Crescita, chiarezza ed esecuzione.</h2>
-    <p class="sub rv rv-d1">Tre aziende, tre percorsi diversi. Le parole di chi lavora con noi su strategia, digital e operatività.</p>
-
-    <div class="tstm-grid">
-      <article class="tstm rv">
-        <div class="tstm-stars" aria-label="Valutazione: 5 su 5">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
-        </div>
-        <p class="tstm-quote">«SarconX ci ha aiutato a capire da dove partire. In poche settimane avevamo un sito che spiegava il nostro servizio meglio di quanto facevamo noi. <strong>Le richieste di consulenza sono aumentate in modo visibile.</strong>»</p>
-        <div class="tstm-who">
-          <span class="tstm-av" aria-hidden="true">MR</span>
-          <div>
-            <p class="tstm-name">Marco R.</p>
-            <p class="tstm-role">CEO — Servizi professionali, Pavia</p>
-          </div>
-        </div>
-      </article>
-
-      <article class="tstm rv rv-d1">
-        <div class="tstm-stars" aria-label="Valutazione: 5 su 5">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
-        </div>
-        <p class="tstm-quote">«Finalmente qualcuno che parla di digitale senza parole grosse. <strong>Il piano di crescita che ci hanno dato era concreto e fattibile.</strong> Abbiamo iniziato con il sito, poi siamo passati alle automazioni.»</p>
-        <div class="tstm-who">
-          <span class="tstm-av" aria-hidden="true">LB</span>
-          <div>
-            <p class="tstm-name">Laura B.</p>
-            <p class="tstm-role">Marketing Manager — Retail, Milano</p>
-          </div>
-        </div>
-      </article>
-
-      <article class="tstm rv rv-d2">
-        <div class="tstm-stars" aria-label="Valutazione: 5 su 5">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
-        </div>
-        <p class="tstm-quote">«Il gestionale che ci hanno costruito ha eliminato una montagna di copia-incolla. <strong>Ora il team commerciale produce preventivi in metà tempo e con meno errori.</strong>»</p>
-        <div class="tstm-who">
-          <span class="tstm-av" aria-hidden="true">DS</span>
-          <div>
-            <p class="tstm-name">Davide S.</p>
-            <p class="tstm-role">COO — Industria, Lombardia</p>
-          </div>
-        </div>
-      </article>
-    </div>
+    <div class="stat rv-rise"><b>50+</b><span>progetti consegnati</span></div>
+    <div class="stat rv-rise rv-d1"><b>3 settimane</b><span>media per un nuovo sito</span></div>
+    <div class="stat rv-rise rv-d2"><b>PMI</b><span>in Lombardia e Italia</span></div>
+    <div class="stat rv-rise rv-d3"><b>24h</b><span>Consulenza gratuita</span></div>
   </div>
 </section>
 
@@ -168,19 +106,19 @@
     <p class="sub rv rv-d1">Indipendentemente dal progetto, dalla tecnologia o dal canale: il modo in cui lavoriamo resta lo stesso.</p>
 
     <div class="svc-grid">
-      <article class="svc rv">
+      <article class="svc rv-rise">
         <span class="svc-num">01</span>
         <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 7v6c0 4.5 3.4 8.5 8 9 4.6-.5 8-4.5 8-9V7l-8-5Z"/></svg></div>
         <h3>Concretezza sull'astrazione</h3>
         <p>Non parliamo di astrazioni. Ogni affermazione sostenuta da un numero, un caso, un meccanismo reale. Mostriamo il lavoro, non lo raccontiamo.</p>
       </article>
-      <article class="svc rv rv-d1">
+      <article class="svc rv-rise rv-d1">
         <span class="svc-num">02</span>
         <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9Z"/></svg></div>
         <h3>Calore con rigore</h3>
         <p>Caldi e umani nella voce, rigorosi e precisi nella sostanza. L'equilibrio del consulente di fiducia: accessibile ma credibile.</p>
       </article>
-      <article class="svc rv rv-d2">
+      <article class="svc rv-rise rv-d2">
         <span class="svc-num">03</span>
         <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M12 3v18"/></svg></div>
         <h3>Sostanza, mai hype</h3>
@@ -194,13 +132,13 @@
 <section class="section" aria-label="Lavoriamo insieme">
   <div class="wrap">
     <div class="cta-banner rv">
-      <h2>Parla con Leonardo.</h2>
-      <p>La prima consulenza è gratuita e senza impegno. Raccontaci la tua azienda, ti diciamo onestamente se e come possiamo aiutarti.</p>
+      <h2>Ora tocca a te raccontarti.</h2>
+      <p>Hai letto da dove veniamo. Il passo successivo è capire da dove vieni tu: com'è fatta la tua azienda, cosa vi blocca, dove volete arrivare. Prima consulenza gratuita e senza impegno.</p>
       <div class="cta-row">
-        <button class="btn btn-volt" type="button" data-contact-trigger>
+        <a href="contatti.html" class="btn btn-volt" data-contact-trigger>
           <span>Prendi un appuntamento</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-        </button>
+        </a>
         <a class="btn btn-ghost" href="lavori.html">Vedi i progetti</a>
       </div>
     </div>
@@ -251,55 +189,6 @@
   </div>
 </div>
 
-<!-- ================= CONTACT MODAL ================= -->
-<div id="contactModal" role="dialog" aria-modal="true" aria-labelledby="cmTitle" aria-hidden="true">
-  <div class="contact-modal-card" role="document">
-    <div class="cm-head">
-      <div>
-        <h2 id="cmTitle">Parliamo del tuo progetto</h2>
-        <p>Ti rispondiamo entro 24 ore lavorative.</p>
-      </div>
-      <button type="button" class="cm-close" aria-label="Chiudi finestra di contatto" data-contact-close>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
-    </div>
-    <form id="cmForm" name="contatti-modal" data-netlify="true" novalidate>
-      <input type="hidden" name="form-name" value="contatti-modal">
-      <div class="field row">
-        <div>
-          <label for="cm-nome">Nome</label>
-          <input id="cm-nome" name="nome" type="text" required autocomplete="name" placeholder="Mario Rossi">
-        </div>
-        <div>
-          <label for="cm-tel">Telefono</label>
-          <input id="cm-tel" name="telefono" type="tel" required autocomplete="tel" placeholder="+39 334 ...">
-        </div>
-      </div>
-      <div class="field">
-        <label for="cm-email">Email</label>
-        <input id="cm-email" name="email" type="email" required autocomplete="email" placeholder="mario@azienda.it">
-      </div>
-      <div class="field">
-        <label for="cm-msg">Messaggio</label>
-        <textarea id="cm-msg" name="messaggio" rows="3" required placeholder="Raccontaci brevemente il tuo progetto..."></textarea>
-      </div>
-      <div class="form-hp" aria-hidden="true">
-        <label for="cm-website">Lascia questo campo vuoto</label>
-        <input id="cm-website" type="text" name="website" tabindex="-1" autocomplete="off">
-      </div>
-      <p class="form-msg" id="cmFormMsg" role="alert"></p>
-      <button class="btn btn-volt" type="submit">
-        <span>Invia richiesta</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-      </button>
-      <a class="btn btn-wa" href="https://wa.me/393341340272?text=Ciao%20Leonardo%2C%20vorrei%20parlare%20del%20mio%20progetto%20con%20SarconX." target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.3-.5 0-1 .2-3.4-.7-2.9-1.1-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c0 .2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.1.3.7 1.2 1.5 1.9 1 .9 1.9 1.2 2.2 1.4.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.4 0 .1 0 .7-.2 1.2Z"/></svg>
-        <span>Scrivici su WhatsApp</span>
-      </a>
-    </form>
-    <p class="cm-foot">oppure scrivi direttamente a <a href="mailto:Info@sarconx.it">Info@sarconx.it</a></p>
-  </div>
-</div>
 
 <script src="app.js" defer></script>
 </body>

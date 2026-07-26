@@ -18,6 +18,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script>/* reveals hide content until JS runs; if JS never runs the page must
+   still be readable, so the hidden state is gated behind this class */
+document.documentElement.className+=" js";</script>
 </head>
 <body>
 
@@ -31,10 +34,10 @@
       <a href="servizi.html" aria-current="page">Servizi</a>
       <a href="lavori.html">Lavori</a>
       <a href="chi-siamo.html">Chi siamo</a>
-      <button class="btn btn-volt btn-nav" type="button" data-contact-trigger>
+      <a href="contatti.html" class="btn btn-volt btn-nav" data-contact-trigger>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H7l-3 3V4Z"/></svg>
         <span>Contatta</span>
-      </button>
+      </a>
     </div>
     <button id="menuBtn" aria-label="Apri il menu" aria-expanded="false" aria-controls="mobileMenu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -49,7 +52,7 @@
   <a href="lavori.html">Lavori</a>
   <a href="chi-siamo.html">Chi siamo</a>
   <a href="contatti.html">Contatti</a>
-  <button class="btn btn-volt" type="button" data-contact-trigger>Contattaci ora</button>
+  <a href="contatti.html" class="btn btn-volt" data-contact-trigger>Contattaci ora</a>
 </div>
 
 <main>
@@ -65,108 +68,54 @@
     <h1 class="hload hd2">Dalla strategia all'esecuzione, su misura per te.</h1>
     <p class="case-lead hload hd3">Sei aree di intervento per accompagnare la tua azienda nel digitale. <strong>Chiarezza prima, costruzione poi.</strong> Ogni servizio parte da una domanda sola: cosa ti serve davvero per crescere?</p>
     <div class="case-ctas hload hd4">
-      <button class="btn btn-volt" type="button" data-contact-trigger>
+      <a href="contatti.html" class="btn btn-volt" data-contact-trigger>
         <span>Prendi un appuntamento</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-      </button>
-      <a class="btn btn-ghost" href="#sfide">Vedi le sfide tipiche</a>
-    </div>
-  </div>
-</section>
-
-<!-- ================= DOVE POSSIAMO AIUTARTI ================= -->
-<section id="sfide" class="section" aria-label="Le sfide che risolviamo">
-  <div class="wrap">
-    <span class="kicker rv">Dove possiamo aiutarti</span>
-    <h2 class="h2 rv">Le domande che ci fanno più spesso.</h2>
-    <p class="sub rv rv-d1">Non serve partire con una soluzione pronta. Serve capire da dove iniziare. Ecco le situazioni in cui le aziende ci cercano.</p>
-
-    <div class="challenge-grid">
-      <div class="challenge-card rv">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
-        <div>
-          <h3>Il sito non porta richieste</h3>
-          <p>Ti fanno trovare, ma i visitatori non si trasformano in contatti. Ti aiutiamo a chiudere il gap tra traffico e vendita.</p>
-        </div>
-      </div>
-      <div class="challenge-card rv rv-d1">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M3 10h18"/></svg>
-        <div>
-          <h3>L'e-commerce non converte</h3>
-          <p>Catalogo, carrelli abbandonati, checkout: analizziamo il percorso e costruiamo uno store che vende.</p>
-        </div>
-      </div>
-      <div class="challenge-card rv rv-d2">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 9.5h-6.5L13 2Z"/></svg>
-        <div>
-          <h3>Il team perde tempo in task ripetitivi</h3>
-          <p>Preventivi, dati, report: disegniamo automazioni operative leggere che restituiscono ore al tuo team.</p>
-        </div>
-      </div>
-      <div class="challenge-card rv rv-d1">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M9.5 15a3.5 3.5 0 0 0 5 0"/></svg>
-        <div>
-          <h3>Non so da dove partire con il digitale</h3>
-          <p>Troppi strumenti, troppi consigli. Facciamo ordine con una strategia chiara e un piano in piccoli passi.</p>
-        </div>
-      </div>
-      <div class="challenge-card rv rv-d2">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
-        <div>
-          <h3>Ho dati sparsi e nessuna chiarezza</h3>
-          <p>Fogli, CRM, e-commerce che non si parlano. Ti aiutiamo a unificare i dati e leggerli per decidere.</p>
-        </div>
-      </div>
-      <div class="challenge-card rv rv-d3">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h20M2 12l4-4m-4 4 4 4"/></svg>
-        <div>
-          <h3>Voglio crescere ma non ho una strategia</h3>
-          <p>Obiettivi, canali, metriche: costruiamo insieme il piano di crescita più realistico per la tua azienda.</p>
-        </div>
-      </div>
+      </a>
+      <a class="btn btn-ghost" href="#consegna">Cosa ricevi davvero</a>
     </div>
   </div>
 </section>
 
 <!-- ================= SERVIZI ================= -->
-<section id="servizi" class="section section-terracotta" aria-label="I servizi SarconX">
+<section id="servizi" class="section" aria-label="I servizi SarconX">
   <div class="wrap">
     <span class="kicker rv">Cosa facciamo</span>
     <h2 class="h2 rv">Sei servizi, un unico obiettivo: farti crescere.</h2>
-    <p class="sub rv rv-d1">Ogni servizio è pensato per essere modulare: puoi partire da uno e aggiungerne altri quando lo strodi lo richiede.</p>
+    <p class="sub rv rv-d1">Ogni servizio è modulare: puoi partire da uno e aggiungerne altri quando la crescita lo richiede.</p>
 
     <div class="svc-grid">
-      <article class="svc rv">
+      <article class="svc rv-rise">
         <span class="svc-num">1</span>
         <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/></svg></div>
         <h3>Consulenza strategica digitale</h3>
         <p>Analizziamo il tuo modello di business, il posizionamento e i canali per costruire un piano di crescita chiaro, prioritario e misurabile.</p>
       </article>
-      <article class="svc rv rv-d1">
+      <article class="svc rv-rise rv-d1">
         <span class="svc-num">2</span>
         <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
         <h3>Marketing &amp; Growth</h3>
         <p>Definiamo funnel, contenuti, campagne e metriche per portare clienti qualificati e ridurre il costo di acquisizione.</p>
       </article>
-      <article class="svc rv rv-d2">
+      <article class="svc rv-rise rv-d2">
         <span class="svc-num">3</span>
         <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M3 10h18"/></svg></div>
         <h3>Siti web e esperienza digitale</h3>
         <p>Progettiamo siti che raccontano il brand, guidano il visitatore e trasformano la visita in contatto o vendita.</p>
       </article>
-      <article class="svc rv">
+      <article class="svc rv-rise">
         <span class="svc-num">4</span>
         <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 10h18M10 10v11"/></svg></div>
         <h3>E-commerce su misura</h3>
         <p>Costruiamo store Shopify o custom pensati per convertire: catalogo, checkout, integrazioni e operatività dietro le quinte.</p>
       </article>
-      <article class="svc rv rv-d1">
+      <article class="svc rv-rise rv-d1">
         <span class="svc-num">5</span>
         <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 6-6 6 6 6M16 6l6 6-6 6"/></svg></div>
         <h3>Applicazioni, web app e software</h3>
         <p>Sviluppiamo strumenti su misura per il tuo team: gestionali, configuratori, app mobile e portali interni.</p>
       </article>
-      <article class="svc rv rv-d2">
+      <article class="svc rv-rise rv-d2">
         <span class="svc-num">6</span>
         <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 9.5h-6.5L13 2Z"/></svg></div>
         <h3>Servizi done-for-you</h3>
@@ -176,36 +125,92 @@
   </div>
 </section>
 
-<!-- ================= METODO ================= -->
-<section id="metodo" class="section" aria-label="Come lavoriamo">
+<!-- ================= COSA RICEVI ================= -->
+<!--
+  This section replaces the challenge grid and the method block that
+  used to be copy-pasted from the home page. A visitor who clicked
+  "Servizi" already knows the pitch; what they still don't know is
+  what physically lands in their hands. That is what belongs here.
+-->
+<section id="consegna" class="section band" aria-label="Cosa ricevi con ogni servizio">
   <div class="wrap">
-    <span class="kicker rv">Come lavoriamo</span>
-    <h2 class="h2 rv">Un processo semplice, con il focus sui risultati.</h2>
-    <p class="sub rv rv-d1">Niente riunioni infinite, niente documenti di 40 pagine. Un percorso collaudato in tre passi.</p>
+    <span class="kicker rv draw-line">Concretamente</span>
+    <h2 class="h2 rv">Cosa ti ritrovi in mano alla fine.</h2>
+    <p class="sub rv rv-d1">Nessun servizio si chiude con una presentazione e una stretta di mano. Ecco cosa consegniamo, servizio per servizio.</p>
 
-    <div class="steps">
-      <article class="step rv">
-        <div class="step-num">01<i>/03</i></div>
-        <h3>Ci ascoltiamo</h3>
-        <p>Analizziamo la tua azienda, i tuoi obiettivi e i punti di frizione. La prima consulenza è gratuita e senza impegno.</p>
-      </article>
-      <article class="step rv rv-d1">
-        <div class="step-num">02<i>/03</i></div>
-        <h3>Progettiamo e costruiamo</h3>
-        <p>Disegniamo la soluzione più adatta — sito, e-commerce, app, automazione o piano di crescita — e la portiamo online in settimane.</p>
-      </article>
-      <article class="step rv rv-d2">
-        <div class="step-num">03<i>/03</i></div>
-        <h3>Misuriamo e ottimizziamo</h3>
-        <p>Ogni risultato è misurato. Restiamo al tuo fianco per migliorare conversioni, processi e performance nel tempo.</p>
-      </article>
-    </div>
+    <dl class="deliver rv-stagger">
+      <div class="deliver-row rv-rise">
+        <dt>Consulenza strategica</dt>
+        <dd>
+          <p>Un documento di posizionamento, la mappa dei canali che hanno senso per te e una roadmap a priorità, non un elenco di buone intenzioni.</p>
+          <ul class="deliver-list">
+            <li>Analisi del modello di business e dei competitor</li>
+            <li>Piano a 3–6 mesi con priorità e responsabilità</li>
+            <li>Le metriche che useremo per capire se funziona</li>
+          </ul>
+        </dd>
+      </div>
 
-    <div class="metodo-strip rv rv-d3">
-      <span>Prima consulenza gratuita</span>
-      <span>Soluzioni su misura</span>
-      <span>Metriche condivise</span>
-    </div>
+      <div class="deliver-row rv-rise">
+        <dt>Marketing &amp; Growth</dt>
+        <dd>
+          <p>Il funnel disegnato per intero, dai contenuti alle campagne, con la strumentazione già collegata per misurarlo.</p>
+          <ul class="deliver-list">
+            <li>Struttura del funnel e messaggi per ogni fase</li>
+            <li>Setup di tracciamento e dashboard condivisa</li>
+            <li>Calendario contenuti e campagne del primo trimestre</li>
+          </ul>
+        </dd>
+      </div>
+
+      <div class="deliver-row rv-rise">
+        <dt>Siti web</dt>
+        <dd>
+          <p>Un sito che va online, non un mockup. Con i testi scritti, le immagini ottimizzate e le pagine indicizzabili dal primo giorno.</p>
+          <ul class="deliver-list">
+            <li>Design e copy di tutte le pagine</li>
+            <li>Performance, SEO tecnica e accessibilità di base</li>
+            <li>Accessi, documentazione e passaggio di consegne</li>
+          </ul>
+        </dd>
+      </div>
+
+      <div class="deliver-row rv-rise">
+        <dt>E-commerce</dt>
+        <dd>
+          <p>Uno store operativo: catalogo caricato, checkout testato, spedizioni e pagamenti collegati.</p>
+          <ul class="deliver-list">
+            <li>Catalogo, schede prodotto e categorie</li>
+            <li>Checkout, pagamenti, spedizioni e fatturazione</li>
+            <li>Formazione al team su come gestirlo da soli</li>
+          </ul>
+        </dd>
+      </div>
+
+      <div class="deliver-row rv-rise">
+        <dt>App e software su misura</dt>
+        <dd>
+          <p>Uno strumento che il tuo team usa davvero, costruito partendo dal processo che già esiste in azienda.</p>
+          <ul class="deliver-list">
+            <li>Analisi del processo attuale prima di scrivere codice</li>
+            <li>Rilasci progressivi, testabili a ogni passo</li>
+            <li>Codice e documentazione di tua proprietà</li>
+          </ul>
+        </dd>
+      </div>
+
+      <div class="deliver-row rv-rise">
+        <dt>Done-for-you</dt>
+        <dd>
+          <p>Noi dentro l'operatività, con un punto di contatto unico e un ritmo di lavoro concordato.</p>
+          <ul class="deliver-list">
+            <li>Gestione continuativa dei canali concordati</li>
+            <li>Report periodico con quello che è cambiato e perché</li>
+            <li>Nessun vincolo di lock-in: gli accessi restano tuoi</li>
+          </ul>
+        </dd>
+      </div>
+    </dl>
   </div>
 </section>
 
@@ -216,10 +221,10 @@
       <h2>Pronti a partire?</h2>
       <p>La prima consulenza è gratuita e senza impegno. Raccontaci dove sei e dove vuoi arrivare: ti diciamo onestamente se e come possiamo aiutarti.</p>
       <div class="cta-row">
-        <button class="btn btn-volt" type="button" data-contact-trigger>
+        <a href="contatti.html" class="btn btn-volt" data-contact-trigger>
           <span>Prenota una consulenza</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-        </button>
+        </a>
         <a class="btn btn-ghost" href="lavori.html">Vedi i progetti</a>
       </div>
     </div>
@@ -270,55 +275,6 @@
   </div>
 </div>
 
-<!-- ================= CONTACT MODAL ================= -->
-<div id="contactModal" role="dialog" aria-modal="true" aria-labelledby="cmTitle" aria-hidden="true">
-  <div class="contact-modal-card" role="document">
-    <div class="cm-head">
-      <div>
-        <h2 id="cmTitle">Parliamo del tuo progetto</h2>
-        <p>Ti rispondiamo entro 24 ore lavorative.</p>
-      </div>
-      <button type="button" class="cm-close" aria-label="Chiudi finestra di contatto" data-contact-close>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
-    </div>
-    <form id="cmForm" name="contatti-modal" data-netlify="true" novalidate>
-      <input type="hidden" name="form-name" value="contatti-modal">
-      <div class="field row">
-        <div>
-          <label for="cm-nome">Nome</label>
-          <input id="cm-nome" name="nome" type="text" required autocomplete="name" placeholder="Mario Rossi">
-        </div>
-        <div>
-          <label for="cm-tel">Telefono</label>
-          <input id="cm-tel" name="telefono" type="tel" required autocomplete="tel" placeholder="+39 334 ...">
-        </div>
-      </div>
-      <div class="field">
-        <label for="cm-email">Email</label>
-        <input id="cm-email" name="email" type="email" required autocomplete="email" placeholder="mario@azienda.it">
-      </div>
-      <div class="field">
-        <label for="cm-msg">Messaggio</label>
-        <textarea id="cm-msg" name="messaggio" rows="3" required placeholder="Raccontaci brevemente il tuo progetto..."></textarea>
-      </div>
-      <div class="form-hp" aria-hidden="true">
-        <label for="cm-website">Lascia questo campo vuoto</label>
-        <input id="cm-website" type="text" name="website" tabindex="-1" autocomplete="off">
-      </div>
-      <p class="form-msg" id="cmFormMsg" role="alert"></p>
-      <button class="btn btn-volt" type="submit">
-        <span>Invia richiesta</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-      </button>
-      <a class="btn btn-wa" href="https://wa.me/393341340272?text=Ciao%20Leonardo%2C%20vorrei%20parlare%20del%20mio%20progetto%20con%20SarconX." target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.3-.5 0-1 .2-3.4-.7-2.9-1.1-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c0 .2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.1.3.7 1.2 1.5 1.9 1 .9 1.9 1.2 2.2 1.4.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.4 0 .1 0 .7-.2 1.2Z"/></svg>
-        <span>Scrivici su WhatsApp</span>
-      </a>
-    </form>
-    <p class="cm-foot">oppure scrivi direttamente a <a href="mailto:Info@sarconx.it">Info@sarconx.it</a></p>
-  </div>
-</div>
 
 <script src="app.js" defer></script>
 </body>

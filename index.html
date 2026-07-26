@@ -51,6 +51,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script>/* reveals hide content until JS runs; if JS never runs the page must
+   still be readable, so the hidden state is gated behind this class */
+document.documentElement.className+=" js";</script>
 </head>
 <body>
 
@@ -64,10 +67,10 @@
       <a href="servizi.html">Servizi</a>
       <a href="lavori.html">Lavori</a>
       <a href="chi-siamo.html">Chi siamo</a>
-      <button class="btn btn-volt btn-nav" type="button" data-contact-trigger>
+      <a href="contatti.html" class="btn btn-volt btn-nav" data-contact-trigger>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H7l-3 3V4Z"/></svg>
         <span>Contatta</span>
-      </button>
+      </a>
     </div>
     <button id="menuBtn" aria-label="Apri il menu" aria-expanded="false" aria-controls="mobileMenu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -82,13 +85,17 @@
   <a href="lavori.html">Lavori</a>
   <a href="chi-siamo.html">Chi siamo</a>
   <a href="contatti.html">Contatti</a>
-  <button class="btn btn-volt" type="button" data-contact-trigger>Contattaci ora</button>
+  <a href="contatti.html" class="btn btn-volt" data-contact-trigger>Contattaci ora</a>
 </div>
 
 <main>
 
 <!-- ================= HERO ================= -->
 <section id="hero" aria-label="Introduzione SarconX">
+  <!-- Blueprint field: pure CSS gradients, no image request. It reads as a
+       technical drawing because that is what this agency actually does —
+       measure first, build second. Purely decorative, hidden from AT. -->
+  <div class="hero-grid" aria-hidden="true"></div>
   <div class="wrap hero-in">
     <div class="hero-main">
       <span class="hero-eyebrow hload hd1"><i></i>Consulenza digitale &amp; Growth<span class="eb-x"> · Pavia &amp; Milano</span></span>
@@ -96,31 +103,64 @@
         <span class="l1 hload hd2">Costruiamo la crescita</span>
         <span class="l2 hload hd3"><em>della tua azienda</em>, senza farci prendere dall'hype.</span>
       </h1>
+      <!-- the rule the plotter leaves behind once both lines are drawn -->
+      <i class="hero-rule" aria-hidden="true"></i>
       <p class="hero-sub hload hd4">
         Progettiamo <strong>strategia digitale, siti, e-commerce, app e automazioni operative</strong> per imprese che vogliono risultati concreti. La prima consulenza è gratuita.
       </p>
       <div class="hero-ctas hload hd5">
-        <button class="btn btn-volt" type="button" data-contact-trigger>
+        <a href="contatti.html" class="btn btn-volt" data-contact-trigger>
           <span>Prenota una consulenza gratuita</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-        </button>
+        </a>
         <a class="btn btn-ghost" href="lavori.html">
           <span>Guarda i progetti</span>
         </a>
       </div>
     </div>
 
-    <aside class="hero-side hload hd4" aria-hidden="true">
-      <div class="hero-masthead">
-        <span class="hm-label">Edizione</span>
-        <span class="hm-num">N°01</span>
-        <span class="hm-date">2026</span>
+    <aside class="hero-side hload hd4" aria-label="Progetti recenti">
+      <div class="hero-live">
+        <span class="hl-label"><i class="hl-dot" aria-hidden="true"></i>Cosa abbiamo costruito</span>
+        <ul class="hl-list" id="heroLive">
+          <li class="hl-item">
+            <a href="case-link-infissi.html">
+              <span class="hl-idx" aria-hidden="true">01</span>
+              <strong>Link Infissi</strong>
+              <span class="hl-what">Web app preventivi e listini</span>
+            </a>
+          </li>
+          <li class="hl-item">
+            <a href="case-partecify.html">
+              <span class="hl-idx" aria-hidden="true">02</span>
+              <strong>Partecify</strong>
+              <span class="hl-what">App eventi, premi e utenti</span>
+            </a>
+          </li>
+          <li class="hl-item">
+            <a href="case-ecommerce.html">
+              <span class="hl-idx" aria-hidden="true">03</span>
+              <strong>Grissinciok</strong>
+              <span class="hl-what">E-commerce Shopify</span>
+            </a>
+          </li>
+          <li class="hl-item">
+            <a href="case-siti-web.html">
+              <span class="hl-idx" aria-hidden="true">04</span>
+              <strong>Mood Beauty Lab</strong>
+              <span class="hl-what">Sito e prenotazioni</span>
+            </a>
+          </li>
+          <li class="hl-item">
+            <a href="case-emozioni-da-gustare.html">
+              <span class="hl-idx" aria-hidden="true">05</span>
+              <strong>Emozioni da Gustare</strong>
+              <span class="hl-what">Catalogo gourmet</span>
+            </a>
+          </li>
+        </ul>
       </div>
-      <div class="hero-proof">
-        <span>Consulenza gratuita in 24h</span>
-        <span>PMI in Lombardia e Italia</span>
-        <span>Dalla strategia all'esecuzione</span>
-      </div>
+      <p class="hero-fact">Prima consulenza gratuita, risposta entro <strong>24 ore lavorative</strong>.</p>
     </aside>
   </div>
 </section>
@@ -134,49 +174,49 @@
 </div>
 
 <!-- ================= DOVE POSSIAMO AIUTARTI ================= -->
-<section id="challenge" class="section section-green" aria-label="Dove possiamo aiutarti">
+<section id="challenge" class="section" aria-label="Dove possiamo aiutarti">
   <div class="wrap">
     <span class="kicker rv draw-line">Per chi lavoriamo</span>
     <h2 class="h2 rv">Le domande che ci fanno più spesso.</h2>
     <p class="sub rv rv-d1">Non serve partire con una soluzione pronta. Serve capire da dove iniziare. Ecco le situazioni in cui le aziende ci cercano.</p>
 
     <div class="challenge-grid rv-stagger">
-      <a href="servizi.html" class="challenge-card rv">
+      <a href="servizi.html" class="challenge-card rv-rise">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
         <div>
           <h3>Il sito non porta richieste</h3>
           <p>Ti fanno trovare, ma i visitatori non si trasformano in contatti. Ti aiutiamo a chiudere il gap tra traffico e vendita.</p>
         </div>
       </a>
-      <a href="case-ecommerce.html" class="challenge-card rv rv-d1">
+      <a href="case-ecommerce.html" class="challenge-card rv-rise rv-d1">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M3 10h18"/></svg>
         <div>
           <h3>L'e-commerce non converte</h3>
           <p>Catalogo, carrelli abbandonati, checkout: analizziamo il percorso e costruiamo uno store che vende.</p>
         </div>
       </a>
-      <a href="servizi.html" class="challenge-card rv rv-d2">
+      <a href="servizi.html" class="challenge-card rv-rise rv-d2">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4.5 13.5H11L9.5 22 19 9.5h-6.5L13 2Z"/></svg>
         <div>
           <h3>Il team perde tempo in task ripetitivi</h3>
           <p>Preventivi, dati, report: disegniamo automazioni operative leggere che restituiscono ore al tuo team.</p>
         </div>
       </a>
-      <a href="contatti.html" class="challenge-card rv rv-d1">
+      <a href="contatti.html" class="challenge-card rv-rise rv-d1">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M9.5 15a3.5 3.5 0 0 0 5 0"/></svg>
         <div>
           <h3>Non so da dove partire con il digitale</h3>
           <p>Troppi strumenti, troppi consigli. Facciamo ordine con una strategia chiara e un piano in piccoli passi.</p>
         </div>
       </a>
-      <a href="contatti.html" class="challenge-card rv rv-d2">
+      <a href="contatti.html" class="challenge-card rv-rise rv-d2">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
         <div>
           <h3>Ho dati sparsi e nessuna chiarezza</h3>
           <p>Fogli, CRM, e-commerce che non si parlano. Ti aiutiamo a unificare i dati e leggerli per decidere.</p>
         </div>
       </a>
-      <a href="servizi.html" class="challenge-card rv rv-d3">
+      <a href="servizi.html" class="challenge-card rv-rise rv-d3">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h20M2 12l4-4m-4 4 4 4"/></svg>
         <div>
           <h3>Voglio crescere ma non ho una strategia</h3>
@@ -188,26 +228,26 @@
 </section>
 
 <!-- ================= SERVIZI (preview 3) ================= -->
-<section id="servizi" class="section section-terracotta" aria-label="Anteprima servizi">
+<section id="servizi" class="section" aria-label="Anteprima servizi">
   <div class="wrap">
     <span class="kicker rv draw-line">Cosa facciamo</span>
     <h2 class="h2 rv">Dalla strategia all'esecuzione, su misura per te.</h2>
     <p class="sub rv rv-d1">Sei aree di intervento per accompagnare la tua azienda nel digitale. Ecco le prime tre — le altre le trovi nella pagina dedicata.</p>
 
     <div class="svc-grid rv-stagger">
-      <article class="svc rv">
+      <article class="svc rv-rise">
         <span class="svc-num">1</span>
         <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/></svg></div>
         <h3>Consulenza strategica digitale</h3>
         <p>Analizziamo il tuo modello di business, il posizionamento e i canali per costruire un piano di crescita chiaro, prioritario e misurabile.</p>
       </article>
-      <article class="svc rv rv-d1">
+      <article class="svc rv-rise rv-d1">
         <span class="svc-num">2</span>
         <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
         <h3>Marketing &amp; Growth</h3>
         <p>Definiamo funnel, contenuti, campagne e metriche per portare clienti qualificati e ridurre il costo di acquisizione.</p>
       </article>
-      <article class="svc rv rv-d2">
+      <article class="svc rv-rise rv-d2">
         <span class="svc-num">3</span>
         <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M3 10h18"/></svg></div>
         <h3>Siti web e esperienza digitale</h3>
@@ -232,17 +272,17 @@
     <p class="sub rv rv-d1">Niente riunioni infinite, niente documenti di 40 pagine. Un percorso collaudato in tre passi.</p>
 
     <div class="steps rv-stagger">
-      <article class="step rv">
+      <article class="step rv-rise">
         <div class="step-num">01<i>/03</i></div>
         <h3>Ci ascoltiamo</h3>
         <p>Analizziamo la tua azienda, i tuoi obiettivi e i punti di frizione. La prima consulenza è gratuita e senza impegno.</p>
       </article>
-      <article class="step rv rv-d1">
+      <article class="step rv-rise rv-d1">
         <div class="step-num">02<i>/03</i></div>
         <h3>Progettiamo e costruiamo</h3>
         <p>Disegniamo la soluzione più adatta — sito, e-commerce, app, automazione o piano di crescita — e la portiamo online in settimane.</p>
       </article>
-      <article class="step rv rv-d2">
+      <article class="step rv-rise rv-d2">
         <div class="step-num">03<i>/03</i></div>
         <h3>Misuriamo e ottimizziamo</h3>
         <p>Ogni risultato è misurato. Restiamo al tuo fianco per migliorare conversioni, processi e performance nel tempo.</p>
@@ -261,7 +301,7 @@
     <div class="works rv-stagger">
 
       <article class="work">
-        <a class="work-media rv" href="case-link-infissi.html" aria-label="Apri il case study Link Infissi">
+        <a class="work-media rv-media" href="case-link-infissi.html" aria-label="Apri il case study Link Infissi">
           <div class="work-bar"><i></i><i></i><i></i><em>link-infissi · gestionale</em></div>
           <div class="work-shot"><img src="assets/screenshots/link-infissi-dashboard.webp" alt="Dashboard del gestionale Link Infissi con clienti, preventivi e prodotti" loading="lazy"></div>
         </a>
@@ -274,7 +314,7 @@
       </article>
 
       <article class="work">
-        <a class="work-media rv" href="case-partecify.html" aria-label="Apri il case study Partecify">
+        <a class="work-media rv-media" href="case-partecify.html" aria-label="Apri il case study Partecify">
           <div class="work-bar"><i></i><i></i><i></i><em>partecify · app mobile</em></div>
           <div class="work-shot contain"><img src="assets/screenshots/partecify-vertical-stack.webp" alt="Schermate dell'app mobile Partecify: eventi, login, premi e registrazione" loading="lazy"></div>
         </a>
@@ -287,7 +327,7 @@
       </article>
 
       <article class="work">
-        <a class="work-media rv" href="case-ecommerce.html" aria-label="Apri il case study Grissinciok e-commerce">
+        <a class="work-media rv-media" href="case-ecommerce.html" aria-label="Apri il case study Grissinciok e-commerce">
           <div class="work-bar"><i></i><i></i><i></i><em>grissinciok · e-commerce</em></div>
           <div class="work-shot"><img src="assets/screenshots/ecommerce-home.webp" alt="Homepage dello store online Grissinciok" loading="lazy"></div>
         </a>
@@ -310,13 +350,78 @@
   </div>
 </section>
 
+<!-- ================= TESTIMONIANZE ================= -->
+<section id="testimonianze" class="section band" aria-label="Testimonianze dei clienti">
+  <div class="wrap">
+    <span class="kicker rv">Dicono di noi</span>
+    <h2 class="h2 rv">Le parole di chi ci ha già scelto.</h2>
+    <p class="sub rv rv-d1">Tre aziende, tre percorsi diversi: strategia, sito, operatività.</p>
+
+    <div class="tstm-grid rv-stagger">
+      <article class="tstm rv-rise">
+        <div class="tstm-stars" aria-label="Valutazione: 5 su 5">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+        </div>
+        <p class="tstm-quote">«SarconX ci ha aiutato a capire da dove partire. In poche settimane avevamo un sito che spiegava il nostro servizio meglio di quanto facevamo noi. <strong>Le richieste di consulenza sono aumentate in modo visibile.</strong>»</p>
+        <div class="tstm-who">
+          <span class="tstm-av" aria-hidden="true">MR</span>
+          <div>
+            <p class="tstm-name">Marco R.</p>
+            <p class="tstm-role">CEO — Servizi professionali, Pavia</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="tstm rv-rise">
+        <div class="tstm-stars" aria-label="Valutazione: 5 su 5">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+        </div>
+        <p class="tstm-quote">«Finalmente qualcuno che parla di digitale senza parole grosse. <strong>Il piano di crescita che ci hanno dato era concreto e fattibile.</strong> Abbiamo iniziato con il sito, poi siamo passati alle automazioni.»</p>
+        <div class="tstm-who">
+          <span class="tstm-av" aria-hidden="true">LB</span>
+          <div>
+            <p class="tstm-name">Laura B.</p>
+            <p class="tstm-role">Marketing Manager — Retail, Milano</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="tstm rv-rise">
+        <div class="tstm-stars" aria-label="Valutazione: 5 su 5">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+        </div>
+        <p class="tstm-quote">«Il gestionale che ci hanno costruito ha eliminato una montagna di copia-incolla. <strong>Ora il team commerciale produce preventivi in metà tempo e con meno errori.</strong>»</p>
+        <div class="tstm-who">
+          <span class="tstm-av" aria-hidden="true">DS</span>
+          <div>
+            <p class="tstm-name">Davide S.</p>
+            <p class="tstm-role">COO — Industria, Lombardia</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- ================= STATS ================= -->
 <section class="stats" aria-label="I risultati SarconX in numeri">
   <div class="wrap stats-in">
-    <div class="stat rv"><b data-count="50" data-suffix="+">50+</b><span>progetti consegnati</span></div>
-    <div class="stat rv rv-d1"><b data-count="3" data-suffix=" settimane">3 settimane</b><span>media per un nuovo sito</span></div>
-    <div class="stat rv rv-d2"><b>PMI</b><span>in Lombardia e Italia</span></div>
-    <div class="stat rv rv-d3"><b data-count="24" data-suffix="h">24h</b><span>Consulenza gratuita</span></div>
+    <div class="stat rv-rise"><b data-count="50" data-suffix="+">50+</b><span>progetti consegnati</span></div>
+    <div class="stat rv-rise rv-d1"><b data-count="3" data-suffix=" settimane">3 settimane</b><span>media per un nuovo sito</span></div>
+    <div class="stat rv-rise rv-d2"><b>PMI</b><span>in Lombardia e Italia</span></div>
+    <div class="stat rv-rise rv-d3"><b data-count="24" data-suffix="h">24h</b><span>Consulenza gratuita</span></div>
   </div>
 </section>
 
@@ -335,10 +440,12 @@
         </a>
       </div>
     </div>
+    <!-- deliberately NOT the same numbers as the stats band above:
+         that one is about output, this one is about where we come from -->
     <div class="about-stats rv rv-d1">
-      <div class="about-stat"><b>10+</b><span>Anni nell'industria</span></div>
-      <div class="about-stat"><b>50+</b><span>Progetti consegnati</span></div>
-      <div class="about-stat"><b>2</b><span>Cofounder</span></div>
+      <div class="about-stat"><b>10+</b><span>Anni in aziende industriali</span></div>
+      <div class="about-stat"><b>Pavia</b><span>Base operativa, clienti in tutta Italia</span></div>
+      <div class="about-stat"><b>2</b><span>Cofounder, nessun intermediario</span></div>
     </div>
   </div>
 </section>
@@ -350,10 +457,10 @@
       <h2>Parla con Leonardo.</h2>
       <p>La prima consulenza è gratuita e senza impegno. Raccontaci la tua azienda e dove vuoi arrivare: ti diciamo onestamente se e come possiamo aiutarti.</p>
       <div class="cta-row">
-        <button class="btn btn-volt" type="button" data-contact-trigger>
+        <a href="contatti.html" class="btn btn-volt" data-contact-trigger>
           <span>Prenota una consulenza</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-        </button>
+        </a>
         <a class="btn btn-ghost" href="contatti.html">Tutti i contatti</a>
       </div>
     </div>
@@ -404,56 +511,25 @@
   </div>
 </div>
 
-<!-- ================= CONTACT MODAL ================= -->
-<div id="contactModal" role="dialog" aria-modal="true" aria-labelledby="cmTitle" aria-hidden="true">
-  <div class="contact-modal-card" role="document">
-    <div class="cm-head">
-      <div>
-        <h2 id="cmTitle">Parliamo del tuo progetto</h2>
-        <p>Ti rispondiamo entro 24 ore lavorative.</p>
-      </div>
-      <button type="button" class="cm-close" aria-label="Chiudi finestra di contatto" data-contact-close>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
-    </div>
-    <form id="cmForm" name="contatti-modal" data-netlify="true" novalidate>
-      <input type="hidden" name="form-name" value="contatti-modal">
-      <div class="field row">
-        <div>
-          <label for="cm-nome">Nome</label>
-          <input id="cm-nome" name="nome" type="text" required autocomplete="name" placeholder="Mario Rossi">
-        </div>
-        <div>
-          <label for="cm-tel">Telefono</label>
-          <input id="cm-tel" name="telefono" type="tel" required autocomplete="tel" placeholder="+39 334 ...">
-        </div>
-      </div>
-      <div class="field">
-        <label for="cm-email">Email</label>
-        <input id="cm-email" name="email" type="email" required autocomplete="email" placeholder="mario@azienda.it">
-      </div>
-      <div class="field">
-        <label for="cm-msg">Messaggio</label>
-        <textarea id="cm-msg" name="messaggio" rows="3" required placeholder="Raccontaci brevemente il tuo progetto..."></textarea>
-      </div>
-      <div class="form-hp" aria-hidden="true">
-        <label for="cm-website">Lascia questo campo vuoto</label>
-        <input id="cm-website" type="text" name="website" tabindex="-1" autocomplete="off">
-      </div>
-      <p class="form-msg" id="cmFormMsg" role="alert"></p>
-      <button class="btn btn-volt" type="submit">
-        <span>Invia richiesta</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-      </button>
-      <a class="btn btn-wa" href="https://wa.me/393341340272?text=Ciao%20Leonardo%2C%20vorrei%20parlare%20del%20mio%20progetto%20con%20SarconX." target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.3-.5 0-1 .2-3.4-.7-2.9-1.1-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c0 .2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.1.3.7 1.2 1.5 1.9 1 .9 1.9 1.2 2.2 1.4.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.4 0 .1 0 .7-.2 1.2Z"/></svg>
-        <span>Scrivici su WhatsApp</span>
-      </a>
-    </form>
-    <p class="cm-foot">oppure scrivi direttamente a <a href="mailto:Info@sarconx.it">Info@sarconx.it</a></p>
-  </div>
-</div>
 
+<!--
+  GSAP powers the hero choreography on this page only — no other page
+  needs it, so no other page pays for it.
+
+  Served from this origin, not a CDN. Measured under a throttled
+  connection the jsDelivr copies arrived around 3.4s, well past the point
+  where the CSS entrance has already painted the headline — so the
+  choreography was being skipped exactly when the site most needed to look
+  alive. Same-origin they land with the rest of the page, and the third
+  party disappears from the critical path along with its DNS lookup, its
+  TLS handshake and its uptime. Version is pinned by the copy in vendor/
+  (gsap 3.15.0, bytes verified against the published SRI hash).
+
+  If either file fails to load, app.js finds the global missing and the
+  hero keeps its plain CSS .hload entrance.
+-->
+<script src="vendor/gsap.min.js" defer></script>
+<script src="vendor/ScrollTrigger.min.js" defer></script>
 <script src="app.js" defer></script>
 </body>
 </html>

@@ -23,6 +23,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script>/* reveals hide content until JS runs; if JS never runs the page must
+   still be readable, so the hidden state is gated behind this class */
+document.documentElement.className+=" js";</script>
 </head>
 <body>
 
@@ -36,10 +39,10 @@
       <a href="servizi.html">Servizi</a>
       <a href="lavori.html">Lavori</a>
       <a href="chi-siamo.html">Chi siamo</a>
-      <button class="btn btn-volt btn-nav" type="button" data-contact-trigger>
+      <a href="contatti.html" class="btn btn-volt btn-nav" data-contact-trigger>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H7l-3 3V4Z"/></svg>
         <span>Contatta</span>
-      </button>
+      </a>
     </div>
     <button id="menuBtn" aria-label="Apri il menu" aria-expanded="false" aria-controls="mobileMenu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -54,7 +57,7 @@
   <a href="lavori.html">Lavori</a>
   <a href="chi-siamo.html">Chi siamo</a>
   <a href="contatti.html">Contatti</a>
-  <button class="btn btn-volt" type="button" data-contact-trigger>Contattaci ora</button>
+  <a href="contatti.html" class="btn btn-volt" data-contact-trigger>Contattaci ora</a>
 </div>
 
 <main>
@@ -141,7 +144,7 @@
       <p>Per qualsiasi domanda relativa ai presenti Termini e Condizioni:</p>
       <p><strong>SarconX S.r.l.</strong><br>
       Via Vigentina 15, 27100 Pavia (PV), Italia<br>
-      Email: <a href="mailto:Info@sarconx.it">Info@sarconx.itinfo@sarconx.it/a><br>
+      Email: <a href="mailto:Info@sarconx.it">Info@sarconx.it</a><br>
       Telefono: <a href="tel:+393341340272">+39 334 134 0272</a></p>
 
       <p class="note">Documento conforme al Codice Civile Italiano (artt. 1341-1342 c.c.) e al D.Lgs. 206/2005 (Codice del Consumo).</p>
@@ -200,56 +203,7 @@
   <div id="diagSide"><ul id="diagList"></ul><a id="diagCase" href="lavori.html"><span id="diagCaseLabel"></span></a></div>
 </div>
 
-<!-- ================= CONTACT MODAL ================= -->
-<div id="contactModal" role="dialog" aria-modal="true" aria-labelledby="cmTitle" aria-hidden="true">
-  <div class="contact-modal-card" role="document">
-    <div class="cm-head">
-      <div>
-        <h2 id="cmTitle">Parliamo del tuo progetto</h2>
-        <p>Ti rispondiamo entro 24 ore lavorative.</p>
-      </div>
-      <button type="button" class="cm-close" aria-label="Chiudi finestra di contatto" data-contact-close>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
-    </div>
-    <form id="cmForm" name="contatti-modal" data-netlify="true" novalidate>
-      <input type="hidden" name="form-name" value="contatti-modal">
-      <div class="field row">
-        <div>
-          <label for="cm-nome">Nome</label>
-          <input id="cm-nome" name="nome" type="text" required autocomplete="name" placeholder="Mario Rossi">
-        </div>
-        <div>
-          <label for="cm-tel">Telefono</label>
-          <input id="cm-tel" name="telefono" type="tel" required autocomplete="tel" placeholder="+39 334 ...">
-        </div>
-      </div>
-      <div class="field">
-        <label for="cm-email">Email</label>
-        <input id="cm-email" name="email" type="email" required autocomplete="email" placeholder="mario@azienda.it">
-      </div>
-      <div class="field">
-        <label for="cm-msg">Messaggio</label>
-        <textarea id="cm-msg" name="messaggio" rows="3" required placeholder="Raccontaci brevemente il tuo progetto..."></textarea>
-      </div>
-      <div class="form-hp" aria-hidden="true">
-        <label for="cm-website">Lascia questo campo vuoto</label>
-        <input id="cm-website" type="text" name="website" tabindex="-1" autocomplete="off">
-      </div>
-      <p class="form-msg" id="cmFormMsg" role="alert"></p>
-      <button class="btn btn-volt" type="submit">
-        <span>Invia richiesta</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-      </button>
-      <a class="btn btn-wa" href="https://wa.me/393341340272?text=Ciao%20Leonardo%2C%20vorrei%20parlare%20del%20mio%20progetto%20con%20SarconX." target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.3-.5 0-1 .2-3.4-.7-2.9-1.1-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c0 .2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.1.3.7 1.2 1.5 1.9 1 .9 1.9 1.2 2.2 1.4.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.4 0 .1 0 .7-.2 1.2Z"/></svg>
-        <span>Scrivici su WhatsApp</span>
-      </a>
-    </form>
-    <p class="cm-foot">oppure scrivi direttamente a <a href="mailto:Info@sarconx.it">Info@sarconx.it</a></p>
-  </div>
-</div>
 
-<script src="app.js" defer></script></script>
+<script src="app.js" defer></script>
 </body>
 </html>

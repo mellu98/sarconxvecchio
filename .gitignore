@@ -24,3 +24,6 @@ Thumbs.db
 
 # Stray source assets (logo in use is assets/brand/sarconx-logo.png)
 /logo.png
+
+# Design skill scratch output (impeccable critiques)
+.impeccable/

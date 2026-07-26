@@ -14,28 +14,54 @@
 	--line: #e5e7eb;
 	--line-strong: #cbd5e1;
 
-	/* --- canonical accents (role-bound) --- */
-	--accent-blu: #0038ff; /* primary CTA */
-	--accent-azzurro: #00e5ff; /* links / hover */
-	--accent-verde: #00ff66; /* positive states / badges */
+	/* --- canonical accents (role-bound) ---
+	   CONTRAST RULE: the neon pair (azzurro/verde) is FILL-ONLY. Both fail WCAG
+	   badly as text on white (azzurro 1.54:1). Anything that renders as text,
+	   icon stroke, or focus ring uses the -ink variant below. */
+	--accent-blu: #0038ff; /* primary CTA — 6.98:1 on white, safe as text */
+	--accent-azzurro: #00e5ff; /* fill only — never text */
+	--accent-verde: #00ff66; /* fill only — never text */
 	--accent-blu-rgb: 0, 56, 255;
 	--accent-azzurro-rgb: 0, 229, 255;
 	--accent-verde-rgb: 0, 255, 102;
 
-	/* --- role aliases (legacy names kept so existing selectors keep working) --- */
-	--accent: var(--accent-azzurro); /* kicker / .volt / .h2 em / focus */
-	--accent-2: var(--accent-verde); /* success icon */
+	/* --- ink variants: same hue families, legible on white --- */
+	--azzurro-ink: #00707f; /* 5.80:1 — kickers, links, accents, numerals */
+	--azzurro-ink-rgb: 0, 112, 127;
+	--verde-ink: #00803a; /* 5.06:1 — success text */
+	--verde-ink-rgb: 0, 128, 58;
+
+	/* --- ROLE MAP — one accent per job, never two in the same block ---
+	   Three hues on pure white only hold if each owns a role and they are
+	   never lined up as peers. Read this before adding any colour:
+
+	     blu     brand voice + primary action
+	             kickers, emphasised words, display numerals, drop caps,
+	             section icons, focus rings, the one filled CTA per block.
+	     azzurro the interactive layer, and ONLY that
+	             links, every :hover, input focus border. If it is not
+	             clickable it does not get azzurro.
+	     verde   positive state
+	             live dot, success confirmation, WhatsApp.
+
+	   Metadata, labels and inline code take no accent at all — neutral is
+	   a decision, not an absence. */
+	--accent: var(--azzurro-ink); /* the interactive layer */
+	--accent-2: var(--verde-ink); /* success icon */
 	--accent-3: var(--accent-blu); /* unused alias */
-	--accent-deep: #00a843; /* verde, deepened for fills (btn-wa) */
+	--accent-deep: #005a66; /* azzurro-ink, deepened for hover fills */
+	--verde-deep: #00602c; /* verde-ink, deepened for hover fills */
 	--accent-soft: #e6fcff; /* azzurro tint */
-	--accent-rgb: var(--accent-azzurro-rgb);
-	--accent-2-rgb: var(--accent-verde-rgb);
+	--accent-rgb: var(--azzurro-ink-rgb);
+	--accent-2-rgb: var(--verde-ink-rgb);
 	--accent-3-rgb: var(--accent-blu-rgb);
 	--cta: var(--accent-blu); /* CTA primary */
 	--cta-deep: #0029cc; /* blu hover/active */
 	--cta-soft: #e6ecff; /* blu tint */
 	--cta-rgb: var(--accent-blu-rgb);
-	--ok: var(--accent-verde);
+	--ok: var(--verde-ink);
+	--err: #b42318; /* 6.57:1 on white — safe as text, not just as a border */
+	--err-rgb: 180, 35, 24;
 
 	--bg-rgb: 255, 255, 255;
 	--surface-rgb: 255, 255, 255;
@@ -51,6 +77,14 @@
 	--shadow-sm: 0 1px 0 rgba(var(--ink-rgb), 0.06);
 	--shadow: none;
 	--shadow-lg: none;
+
+	/* --- motion --- one exponential ease, three durations.
+	   Nothing bounces: this brand is precise, not playful. */
+	--ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+	--ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+	--dur-fast: 0.28s;
+	--dur-base: 0.6s;
+	--dur-slow: 1.1s;
 }
 
 * {
@@ -60,6 +94,8 @@
 }
 html {
 	scroll-behavior: smooth;
+	/* fixed nav is 70px — without this every in-page anchor lands under it */
+	scroll-padding-top: 90px;
 }
 html,
 body {
@@ -117,7 +153,10 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-	outline: 2px solid var(--accent);
+	/* blu: the focus ring is a system signal, not a link — it must read the
+	   same on a button, an input and an anchor, so it takes the strongest
+	   accent rather than the interactive one */
+	outline: 2px solid var(--accent-blu);
 	outline-offset: 3px;
 	border-radius: 0;
 }
@@ -172,7 +211,7 @@ p {
 	font-weight: 600;
 	letter-spacing: 0.18em;
 	text-transform: uppercase;
-	color: var(--accent);
+	color: var(--accent-blu);
 	margin-bottom: 1.4rem;
 }
 .kicker::before {
@@ -192,7 +231,7 @@ p {
 }
 .h2 em {
 	font-style: italic;
-	color: var(--accent);
+	color: var(--accent-blu);
 }
 .sub {
 	font-size: clamp(1.05rem, 1.35vw, 1.2rem);
@@ -203,103 +242,8 @@ p {
 }
 
 .volt {
-	color: var(--accent);
+	color: var(--accent-blu);
 }
-.accent-2 {
-	color: var(--accent-2);
-}
-
-.section-dark {
-	background: var(--bg-dark);
-	color: rgba(var(--bg-rgb), 0.82);
-	border-color: rgba(var(--bg-rgb), 0.18);
-}
-.section-dark h1,
-.section-dark h2,
-.section-dark h3,
-.section-dark .h2,
-.section-dark .kicker,
-.section-dark .hero-eyebrow,
-.section-dark .hm-label,
-.section-dark .hm-num,
-.section-dark .hm-date,
-.section-dark .hero-sub,
-.section-dark .hero-sub strong,
-.section-dark .work-type,
-.section-dark .work-link,
-.section-dark .tstm-name,
-.section-dark .tstm-role,
-.section-dark .stat span,
-.section-dark .stat b,
-.section-dark .cinfo-row b,
-.section-dark .cinfo-row a,
-.section-dark .cinfo-row span.v {
-	color: var(--bg);
-}
-.section-dark .kicker::before {
-	background: var(--bg);
-}
-.section-dark .sub,
-.section-dark .about-copy p,
-.section-dark .split-copy p,
-.section-dark .tstm-quote,
-.section-dark .prose,
-.section-dark .case-lead,
-.section-dark .contact-modal-card .cm-head p {
-	color: rgba(var(--bg-rgb), 0.82);
-}
-.section-dark .sub strong,
-.section-dark .about-copy p strong,
-.section-dark .split-copy p strong,
-.section-dark .tstm-quote strong,
-.section-dark .case-lead strong {
-	color: var(--bg);
-}
-.section-dark .line,
-.section-dark .section {
-	border-color: rgba(var(--bg-rgb), 0.18);
-}
-.section-dark .btn-ghost {
-	border-color: var(--bg);
-	color: var(--bg);
-}
-.section-dark .btn-ghost:hover {
-	background: var(--bg);
-	color: var(--ink);
-}
-
-/* ---------- colored section bands ---------- */
-.section-green,
-.section-terracotta {
-	border-top-color: transparent;
-}
-.section-green {
-	background: var(--bg);
-}
-.section-terracotta {
-	background: var(--bg);
-}
-
-.section-green .challenge-card,
-.section-green .challenge-card:hover {
-	border-top-color: var(--line-strong);
-	border-bottom-color: var(--line-strong);
-}
-.section-green .challenge-card:hover {
-	background: rgba(var(--accent-rgb), 0.07);
-}
-
-.section-terracotta .svc-grid {
-	border-top-color: var(--line-strong);
-}
-.section-terracotta .svc {
-	border-right-color: var(--line);
-	border-bottom-color: var(--line);
-}
-.section-terracotta .svc:hover {
-	background: rgba(var(--ink-rgb), 0.03);
-}
-
 /* drop cap editoriale */
 .about-copy > p:first-of-type::first-letter,
 .prose > p:first-of-type::first-letter {
@@ -308,23 +252,82 @@ p {
 	line-height: 0.85;
 	float: left;
 	margin: 0.05em 0.14em 0 0;
-	color: var(--accent);
+	color: var(--accent-blu);
 	font-weight: 500;
 	font-variation-settings: "opsz" 144;
 }
 
-/* ---------- reveal on scroll (sobrio, niente translateY AI) ---------- */
-.rv {
+/* ============================================================
+   MOTION VOCABULARY
+   Four reveals, not one. The tell of a generated page is a single
+   fade-up applied to every element regardless of what it is; here
+   each reveal is chosen to match the material it reveals.
+
+     .rv        text, headings, copy  — opacity only. Words should
+                                        not slide; they should arrive.
+     .rv-rise   cards, grid cells     — short lift. They are objects.
+     .rv-media  images, visuals       — slow scale settle, like a lens
+                                        finding focus.
+     .rv-num    display numerals      — vertical wipe, counter-like.
+
+   All four share one ease and are neutralised by prefers-reduced-motion.
+
+   Every hidden state is gated behind `.js` on <html>, set by an inline
+   script in the head. A reveal is an enhancement of visible content, not
+   the thing that makes it visible: without that gate, one blocked script
+   or one headless renderer ships an entirely blank page.
+   ============================================================ */
+.js .rv {
 	opacity: 0;
-	transform: translateY(24px);
-	transition:
-		opacity 0.8s ease,
-		transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: opacity var(--dur-base) var(--ease-out);
 }
 .rv.on {
 	opacity: 1;
+}
+
+.js .rv-rise {
+	opacity: 0;
+	transform: translateY(18px);
+	transition:
+		opacity var(--dur-base) var(--ease-out),
+		transform var(--dur-base) var(--ease-out);
+}
+.rv-rise.on {
+	opacity: 1;
 	transform: none;
 }
+
+.rv-media {
+	overflow: hidden;
+}
+.js .rv-media {
+	opacity: 0;
+	transition: opacity var(--dur-base) var(--ease-out);
+}
+.js .rv-media img {
+	transform: scale(1.07);
+	transition: transform var(--dur-slow) var(--ease-out-soft);
+	will-change: transform;
+}
+.rv-media.on {
+	opacity: 1;
+}
+.rv-media.on img {
+	transform: none;
+}
+
+.js .rv-num {
+	opacity: 0;
+	clip-path: inset(0 0 100% 0);
+	transition:
+		opacity var(--dur-fast) linear,
+		clip-path var(--dur-slow) var(--ease-out-soft);
+}
+.rv-num.on {
+	opacity: 1;
+	clip-path: inset(0 0 0 0);
+}
+
 .rv-d1 {
 	transition-delay: 0.08s;
 }
@@ -335,28 +338,28 @@ p {
 	transition-delay: 0.24s;
 }
 
-.rv-stagger .rv:nth-child(1) {
-	transition-delay: 0s;
-}
-.rv-stagger .rv:nth-child(2) {
+/* stagger: any reveal variant, at any depth — the delay follows the
+   element's position among its own siblings, which is what makes it
+   work for both flat grids and nested article/media pairs */
+.rv-stagger :is(.rv, .rv-rise, .rv-media, .rv-num):nth-child(2) {
 	transition-delay: 0.08s;
 }
-.rv-stagger .rv:nth-child(3) {
+.rv-stagger :is(.rv, .rv-rise, .rv-media, .rv-num):nth-child(3) {
 	transition-delay: 0.16s;
 }
-.rv-stagger .rv:nth-child(4) {
+.rv-stagger :is(.rv, .rv-rise, .rv-media, .rv-num):nth-child(4) {
 	transition-delay: 0.24s;
 }
-.rv-stagger .rv:nth-child(5) {
+.rv-stagger :is(.rv, .rv-rise, .rv-media, .rv-num):nth-child(5) {
 	transition-delay: 0.32s;
 }
-.rv-stagger .rv:nth-child(6) {
+.rv-stagger :is(.rv, .rv-rise, .rv-media, .rv-num):nth-child(6) {
 	transition-delay: 0.4s;
 }
-.rv-stagger .rv:nth-child(7) {
+.rv-stagger :is(.rv, .rv-rise, .rv-media, .rv-num):nth-child(7) {
 	transition-delay: 0.48s;
 }
-.rv-stagger .rv:nth-child(8) {
+.rv-stagger :is(.rv, .rv-rise, .rv-media, .rv-num):nth-child(8) {
 	transition-delay: 0.56s;
 }
 
@@ -423,17 +426,6 @@ p {
 	max-height: 44px;
 	object-fit: contain;
 }
-.brand-word {
-	font-family: var(--font-display);
-	font-weight: 800;
-	font-size: 1.06rem;
-	letter-spacing: 0.08em;
-	color: var(--ink);
-}
-.brand-word b {
-	color: var(--accent);
-	font-weight: 800;
-}
 .nav-links {
 	display: flex;
 	align-items: center;
@@ -486,6 +478,22 @@ p {
 }
 .btn-volt:active {
 	background: var(--cta-deep);
+}
+/* WhatsApp — verde, and defined globally. It previously existed only
+   scoped to the modal, so the same button on contatti.html rendered with
+   no background and no border at all. It is an alternative channel, not a
+   second primary: blu stays the one filled CTA of its block. */
+.btn-wa {
+	background: var(--verde-ink);
+	color: var(--surface);
+	border: 1px solid var(--verde-ink);
+}
+.btn-wa:hover {
+	background: var(--verde-deep);
+	border-color: var(--verde-deep);
+}
+.btn-wa:active {
+	background: var(--verde-deep);
 }
 .btn-ghost {
 	border: 1px solid var(--ink);
@@ -605,15 +613,6 @@ p {
 .hero-eyebrow i {
 	display: none;
 }
-@keyframes blink {
-	0%,
-	100% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0.45;
-	}
-}
 
 #hero h1 {
 	font-size: clamp(2.8rem, 4.8vw, 4.6rem);
@@ -635,7 +634,7 @@ p {
 }
 #hero h1 em {
 	font-style: italic;
-	color: var(--accent);
+	color: var(--accent-blu);
 	font-weight: 400;
 }
 .hero-sub {
@@ -670,12 +669,21 @@ p {
 	padding-bottom: 0.4rem;
 	min-height: auto;
 }
-.hero-masthead {
+/* --- hero side: real work, not slogans ---
+   This column used to hold a decorative "Edizione N°01 2026" masthead
+   and three unfalsifiable claims, sealed behind aria-hidden. It is
+   now the strongest thing the agency has: five named projects, each
+   a real link. A slow highlight sweeps the list so it reads as alive
+   without hiding anything from a reader or a crawler. */
+.hero-live {
 	display: flex;
 	flex-direction: column;
-	gap: 0.3rem;
+	gap: 1rem;
 }
-.hm-label {
+.hl-label {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
 	font-family: var(--font-body);
 	font-size: 0.62rem;
 	letter-spacing: 0.2em;
@@ -683,45 +691,181 @@ p {
 	color: var(--ink-muted);
 	font-weight: 600;
 }
-.hm-num {
-	font-family: var(--font-display);
-	font-size: clamp(3.4rem, 5vw, 5rem);
-	font-weight: 400;
-	line-height: 0.92;
-	color: var(--accent);
-	font-style: italic;
-	font-variation-settings: "opsz" 144;
-	letter-spacing: -0.03em;
+.hl-dot {
+	width: 6px;
+	height: 6px;
+	flex: none;
+	border-radius: 50%;
+	background: var(--accent-verde);
+	box-shadow: 0 0 0 0 rgba(var(--accent-verde-rgb), 0.55);
+	animation: hl-pulse 2.6s var(--ease-out) infinite;
 }
-.hm-date {
-	font-family: var(--font-body);
-	font-size: 0.78rem;
-	letter-spacing: 0.1em;
-	color: var(--ink-muted);
-	font-weight: 600;
+@keyframes hl-pulse {
+	0% {
+		box-shadow: 0 0 0 0 rgba(var(--accent-verde-rgb), 0.55);
+	}
+	70%,
+	100% {
+		box-shadow: 0 0 0 7px rgba(var(--accent-verde-rgb), 0);
+	}
 }
-.hero-proof {
+
+.hl-list {
 	display: flex;
 	flex-direction: column;
-	gap: 0.6rem;
-	margin-top: 1.6rem;
+	border-top: 1px solid var(--line);
+}
+.hl-item {
+	border-bottom: 1px solid var(--line);
+}
+.hl-item a {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	column-gap: 0.7rem;
+	align-items: baseline;
+	padding: 0.72rem 0.2rem 0.72rem 0;
+	position: relative;
+	transition: padding-left var(--dur-fast) var(--ease-out);
+}
+.hl-item a::before {
+	content: "";
+	position: absolute;
+	inset: 0 auto 0 -1px;
+	width: 2px;
+	background: var(--accent-blu);
+	transform: scaleY(0);
+	transform-origin: top;
+	transition: transform var(--dur-fast) var(--ease-out);
+}
+.hl-idx {
+	grid-row: 1 / span 2;
+	font-family: var(--font-body);
+	font-size: 0.62rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	color: var(--ink-muted);
+	font-variant-numeric: tabular-nums;
+	transition: color var(--dur-fast) var(--ease-out);
+}
+.hl-item strong {
+	font-size: 0.92rem;
+	font-weight: 600;
+	color: var(--ink);
+	line-height: 1.25;
+}
+.hl-what {
+	font-family: var(--font-body);
+	font-size: 0.74rem;
+	color: var(--ink-muted);
+	line-height: 1.4;
+}
+
+/* the sweep: driven by JS adding .is-lit, matched by :hover/:focus so
+   pointer intent always overrides the ambient animation */
+.hl-item.is-lit a::before,
+.hl-item a:hover::before,
+.hl-item a:focus-visible::before {
+	transform: scaleY(1);
+}
+.hl-item.is-lit a,
+.hl-item a:hover,
+.hl-item a:focus-visible {
+	padding-left: 0.7rem;
+}
+.hl-item.is-lit .hl-idx,
+.hl-item a:hover .hl-idx,
+.hl-item a:focus-visible .hl-idx {
+	color: var(--accent-blu);
+}
+
+.hero-fact {
 	font-family: var(--font-body);
 	font-size: 0.78rem;
 	color: var(--ink-muted);
-	border-top: 1px solid var(--line);
-	padding-top: 1.1rem;
+	line-height: 1.55;
+	border-top: 1px solid var(--ink);
+	padding-top: 1rem;
 }
-.hero-proof span {
-	padding-left: 1rem;
-	position: relative;
-	line-height: 1.4;
-}
-.hero-proof span::before {
-	content: "→";
-	position: absolute;
-	left: 0;
-	color: var(--accent);
+.hero-fact strong {
+	color: var(--ink);
 	font-weight: 600;
+}
+
+/* ============================================================
+   HERO CHOREOGRAPHY (GSAP)
+   Everything here is inert until app.js confirms GSAP actually loaded.
+   That ordering is the whole safety story: if the CDN is down, none of
+   these rules apply and the hero keeps its plain CSS .hload entrance. A
+   third party can slow the first screen down — it must never be able to
+   blank it.
+
+   Two separate gates, and the split matters:
+
+     .gsap-on    scroll work only. Adds nothing that hides content, so it
+                 is safe to set however late GSAP turns up.
+     .gsap-intro takes the ENTRANCE away from CSS, which means it hides
+                 things. app.js sets it only when GSAP arrived early
+                 enough to start from the beginning. Set it late and the
+                 hero would appear on the CSS animation, snap back to
+                 blank, and animate in a second time.
+   ============================================================ */
+
+/* blueprint field — two hairline grids at different pitches, so the eye
+   reads depth rather than graph paper. Masked to fade out downward. */
+.hero-grid {
+	position: absolute;
+	/* bled past the section on both edges: the field drifts on scroll and
+	   an inset:0 box would expose a bare strip at the top as it moves */
+	inset: -18% 0;
+	z-index: 0;
+	pointer-events: none;
+	opacity: 0;
+	background-image:
+		linear-gradient(to right, rgba(var(--accent-blu-rgb), 0.055) 1px, transparent 1px),
+		linear-gradient(to bottom, rgba(var(--accent-blu-rgb), 0.055) 1px, transparent 1px),
+		linear-gradient(to right, rgba(var(--ink-rgb), 0.035) 1px, transparent 1px);
+	background-size:
+		96px 100%,
+		100% 96px,
+		24px 100%;
+	-webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 88%);
+	mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 88%);
+}
+.gsap-on .hero-grid {
+	opacity: 1;
+}
+
+/* the plotter rule under the headline: full width by default, collapsed to
+   zero only when GSAP is going to draw it */
+.hero-rule {
+	display: block;
+	height: 2px;
+	width: min(180px, 40%);
+	/* pulled up tight under the headline so it reads as part of the
+	   drawing, not as a divider between two blocks */
+	margin: -0.45rem 0 1.5rem;
+	background: var(--accent-blu);
+	transform-origin: left center;
+}
+.gsap-intro .hero-rule {
+	transform: scaleX(0);
+}
+
+/* GSAP owns the hero entrance. Killing the CSS animation leaves the
+   element at its opacity:0 start, which is exactly the handoff we want —
+   but only while nothing has been painted yet, which is why app.js gates
+   this class on arriving early. */
+.gsap-intro #hero .hload {
+	animation: none;
+	transform: none;
+}
+.gsap-intro #hero h1 .l1,
+.gsap-intro #hero h1 .l2 {
+	will-change: clip-path;
+}
+.gsap-on .hero-main,
+.gsap-on .hero-side {
+	will-change: transform;
 }
 
 /* hero load stagger */
@@ -749,29 +893,6 @@ p {
 	to {
 		opacity: 1;
 		transform: none;
-	}
-}
-
-/* hero visual — warm abstract shape */
-.hero-shape svg {
-	width: 100%;
-	height: 100%;
-}
-.hero-shape .blob-c svg {
-	width: 46%;
-	height: 46%;
-	stroke: var(--accent);
-}
-@keyframes morph {
-	0%,
-	100% {
-		border-radius: 60% 40% 55% 45% / 55% 45% 55% 45%;
-	}
-	33% {
-		border-radius: 45% 55% 45% 55% / 55% 45% 55% 45%;
-	}
-	66% {
-		border-radius: 55% 45% 60% 40% / 45% 55% 40% 60%;
 	}
 }
 
@@ -806,7 +927,7 @@ p {
 }
 .ticker-track span::after {
 	content: "•";
-	color: var(--accent);
+	color: var(--accent-blu);
 	font-size: 0.7rem;
 	vertical-align: middle;
 	margin-left: 2.8rem;
@@ -850,7 +971,7 @@ p {
 	width: 22px;
 	height: 22px;
 	flex: none;
-	stroke: var(--accent);
+	stroke: var(--accent-blu);
 	margin-top: 0.15rem;
 }
 .challenge-card h3 {
@@ -867,149 +988,6 @@ p {
 }
 
 /* ============================================================
-   FUNZIONI — legacy selector (kept for CSS safety, removed from DOM)
-   ============================================================ */
-#funzioni {
-	background: var(--bg);
-}
-.chips {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.65rem;
-	margin: 2.2rem 0 1.6rem;
-}
-.chip {
-	font-family: var(--font-body);
-	font-size: 0.8rem;
-	font-weight: 700;
-	letter-spacing: 0.04em;
-	color: var(--ink-muted);
-	border: 1px solid var(--line-strong);
-	border-radius: 0;
-	padding: 0.72rem 1.15rem;
-	transition: all 0.25s ease;
-	position: relative;
-	background: var(--surface);
-}
-.chip:hover {
-	color: var(--accent);
-	border-color: var(--accent);
-	transform: translateY(-2px);
-}
-.chip[aria-pressed="true"] {
-	color: var(--surface);
-	background: var(--accent);
-	border-color: transparent;
-	box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.22);
-	font-weight: 800;
-}
-.diag-panel {
-	border: 1px solid var(--line-strong);
-	border-radius: 0;
-	background: var(--surface);
-	padding: clamp(1.5rem, 3.5vw, 2.8rem);
-	display: grid;
-	grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
-	gap: clamp(1.6rem, 4vw, 3.4rem);
-	position: relative;
-	overflow: hidden;
-	box-shadow: none;
-}
-.diag-body.swap {
-	animation: swapin 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.diag-side.swap {
-	animation: swapin 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.06s backwards;
-}
-@keyframes swapin {
-	from {
-		opacity: 0;
-		transform: translateY(14px);
-	}
-	to {
-		opacity: 1;
-		transform: none;
-	}
-}
-.diag-label {
-	font-family: var(--font-body);
-	font-size: 0.68rem;
-	font-weight: 700;
-	letter-spacing: 0.16em;
-	text-transform: uppercase;
-	color: var(--accent);
-	margin-bottom: 0.7rem;
-}
-.diag-quote {
-	font-size: clamp(1.25rem, 2.2vw, 1.7rem);
-	font-weight: 600;
-	color: var(--ink);
-	line-height: 1.4;
-	font-style: italic;
-	margin-bottom: 1.5rem;
-	text-wrap: balance;
-}
-.diag-quote::before {
-	content: "« ";
-}
-.diag-quote::after {
-	content: " »";
-}
-.diag-fix {
-	color: var(--ink-muted);
-	line-height: 1.75;
-	font-size: 1rem;
-}
-.diag-fix strong {
-	color: var(--ink);
-}
-.diag-side {
-	border-left: 1px solid var(--line);
-	padding-left: clamp(1.4rem, 3vw, 2.6rem);
-	display: flex;
-	flex-direction: column;
-}
-.diag-list {
-	display: grid;
-	gap: 0.8rem;
-	margin-bottom: 1.6rem;
-}
-.diag-list li {
-	display: flex;
-	gap: 0.7rem;
-	align-items: flex-start;
-	font-size: 0.95rem;
-	color: var(--ink);
-	font-weight: 600;
-}
-.diag-list li::before {
-	content: "";
-	flex: none;
-	width: 16px;
-	height: 16px;
-	margin-top: 0.22rem;
-	background: var(--accent-2);
-	clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
-}
-.diag-case {
-	margin-top: auto;
-	display: inline-flex;
-	align-items: center;
-	gap: 0.5rem;
-	font-size: 0.88rem;
-	font-weight: 800;
-	color: var(--accent);
-	transition: gap 0.25s ease;
-}
-.diag-case:hover {
-	gap: 0.85rem;
-}
-.diag-case svg {
-	width: 16px;
-	height: 16px;
-}
-
-/* ============================================================
    SERVIZI
    ============================================================ */
 .svc-grid {
@@ -1020,8 +998,6 @@ p {
 	border-top: 1px solid var(--ink);
 }
 .svc {
-	--mx: 50%;
-	--my: 50%;
 	position: relative;
 	border: none;
 	border-right: 1px solid var(--line);
@@ -1042,7 +1018,7 @@ p {
 	font-size: 3.2rem;
 	font-weight: 400;
 	font-style: italic;
-	color: var(--accent);
+	color: var(--accent-blu);
 	margin-bottom: 1.4rem;
 	display: block;
 	line-height: 0.9;
@@ -1055,7 +1031,7 @@ p {
 .svc-ic svg {
 	width: 22px;
 	height: 22px;
-	stroke: var(--accent);
+	stroke: var(--accent-blu);
 }
 .svc h3 {
 	font-size: 1.45rem;
@@ -1083,6 +1059,24 @@ p {
 	gap: 0;
 	margin-top: 2.8rem;
 	border-top: 1px solid var(--ink);
+	position: relative;
+}
+/* the method is a sequence, so its rule draws left-to-right as the
+   three steps arrive — the line is the through-thread, not decoration */
+.steps::before {
+	content: "";
+	position: absolute;
+	top: -1px;
+	left: 0;
+	width: 100%;
+	height: 2px;
+	background: var(--accent-blu);
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 1.4s var(--ease-out-soft);
+}
+.steps.on::before {
+	transform: scaleX(1);
 }
 .step {
 	position: relative;
@@ -1097,13 +1091,22 @@ p {
 .step::after {
 	display: none;
 }
+/* the numeral wipes up inside its own step, after the card has landed —
+   gated with the reveals, since the wipe starts fully clipped */
+.js .step .step-num {
+	clip-path: inset(0 0 100% 0);
+	transition: clip-path var(--dur-slow) var(--ease-out-soft) 0.14s;
+}
+.step.on .step-num {
+	clip-path: inset(0 0 0 0);
+}
 .step-num {
 	font-family: var(--font-display);
 	font-size: 6rem;
 	font-weight: 400;
 	line-height: 0.85;
 	margin-bottom: 1.2rem;
-	color: var(--accent);
+	color: var(--accent-blu);
 	font-style: italic;
 	font-variation-settings: "opsz" 144;
 	letter-spacing: -0.04em;
@@ -1131,6 +1134,72 @@ p {
 	line-height: 1.7;
 	font-family: var(--font-body);
 }
+/* ============================================================
+   DELIVERABLES — servizi.html
+   A definition list, because that is literally what it is: a term
+   and what it means in practice. Two columns on desktop so the eye
+   can scan the service names down the left edge.
+   ============================================================ */
+.deliver {
+	margin-top: 2.8rem;
+	border-top: 1px solid var(--ink);
+}
+.deliver-row {
+	display: grid;
+	grid-template-columns: minmax(180px, 0.3fr) 1fr;
+	gap: clamp(1.2rem, 4vw, 3.2rem);
+	padding: clamp(1.6rem, 3vw, 2.4rem) 0;
+	border-bottom: 1px solid var(--line);
+}
+.deliver dt {
+	font-family: var(--font-display);
+	font-size: clamp(1.15rem, 1.7vw, 1.45rem);
+	font-weight: 500;
+	color: var(--ink);
+	line-height: 1.2;
+	text-wrap: balance;
+}
+.deliver dd {
+	margin: 0;
+}
+.deliver dd > p {
+	font-size: 1rem;
+	color: var(--ink-muted);
+	line-height: 1.7;
+	max-width: 62ch;
+	text-wrap: pretty;
+}
+.deliver-list {
+	display: grid;
+	gap: 0.55rem;
+	margin-top: 1.1rem;
+	list-style: none;
+}
+.deliver-list li {
+	display: flex;
+	gap: 0.7rem;
+	align-items: baseline;
+	font-family: var(--font-body);
+	font-size: 0.92rem;
+	color: var(--ink);
+	line-height: 1.55;
+}
+.deliver-list li::before {
+	content: "";
+	flex: none;
+	width: 7px;
+	height: 7px;
+	background: var(--accent-blu);
+	transform: translateY(-1px);
+}
+
+@media (max-width: 860px) {
+	.deliver-row {
+		grid-template-columns: 1fr;
+		gap: 0.9rem;
+	}
+}
+
 .metodo-strip {
 	margin-top: 2.4rem;
 	display: flex;
@@ -1151,7 +1220,7 @@ p {
 	content: "";
 	width: 5px;
 	height: 5px;
-	background: var(--accent);
+	background: var(--accent-blu);
 	transform: rotate(45deg);
 }
 
@@ -1238,14 +1307,17 @@ p {
 	font-weight: 700;
 	letter-spacing: 0.16em;
 	text-transform: uppercase;
-	color: var(--accent);
+	/* neutral on purpose: this is metadata, not an accent. The work card
+	   already carries one accent on its link — colouring the category label
+	   too would put two hues in the same block for no added meaning. */
+	color: var(--ink-muted);
 	margin-bottom: 1rem;
 }
 .work-type::before {
 	content: "";
 	width: 7px;
 	height: 7px;
-	background: var(--accent);
+	background: var(--ink);
 	transform: rotate(45deg);
 	border-radius: 1px;
 }
@@ -1286,10 +1358,15 @@ p {
 	font-size: 0.88rem;
 	font-weight: 800;
 	color: var(--accent);
-	transition: gap 0.25s ease;
+	/* the only accent in the work card — see the role map */
+	box-shadow: inset 0 -1px 0 rgba(var(--accent-rgb), 0.3);
+	transition:
+		gap 0.25s ease,
+		box-shadow var(--dur-fast) var(--ease-out);
 }
 .work-link:hover {
 	gap: 0.85rem;
+	box-shadow: inset 0 -2px 0 var(--accent-azzurro);
 }
 .work-link svg {
 	width: 16px;
@@ -1319,7 +1396,7 @@ p {
 	line-height: 1.1;
 	font-size: clamp(1.9rem, 3.4vw, 2.7rem);
 	margin-bottom: 0.45rem;
-	color: var(--accent);
+	color: var(--accent-blu);
 }
 .stat span {
 	font-family: var(--font-body);
@@ -1380,7 +1457,7 @@ p {
 	content: '"';
 }
 .tstm-quote strong {
-	color: var(--accent);
+	color: var(--accent-blu);
 	font-weight: 500;
 	font-style: normal;
 }
@@ -1450,7 +1527,7 @@ p {
 	font-weight: 700;
 	font-size: clamp(1.6rem, 2.6vw, 2.2rem);
 	margin-bottom: 0.4rem;
-	color: var(--accent);
+	color: var(--accent-blu);
 }
 .about-stat span {
 	font-family: var(--font-body);
@@ -1481,10 +1558,10 @@ p {
 	margin-top: 2.8rem;
 	align-items: start;
 }
-/* form card */
+/* form card — top rule matches .svc / .step border vocabulary (1px, full width) */
 .form {
 	border: 1px solid var(--line-strong);
-	border-left: 4px solid var(--cta);
+	border-top: 1px solid var(--ink);
 	border-radius: 0;
 	background: var(--surface);
 	padding: clamp(1.5rem, 3vw, 2.2rem);
@@ -1521,8 +1598,9 @@ p {
 }
 .field input::placeholder,
 .field textarea::placeholder {
+	/* full-strength muted ink: at opacity .7 this dropped to ~2.9:1 */
 	color: var(--ink-muted);
-	opacity: 0.7;
+	opacity: 1;
 }
 .field input:focus,
 .field textarea:focus {
@@ -1534,6 +1612,19 @@ p {
 .field textarea {
 	resize: vertical;
 	min-height: 110px;
+}
+/* invalid: red border AND the message above — colour alone is not a
+   signal for everyone, and the error text names the field anyway */
+.field input.is-invalid,
+.field textarea.is-invalid {
+	border-color: var(--err);
+	box-shadow: 0 0 0 3px rgba(var(--err-rgb), 0.14);
+}
+.field .opt {
+	font-weight: 400;
+	color: var(--ink-muted);
+	letter-spacing: 0;
+	text-transform: none;
 }
 .form-hp {
 	position: absolute;
@@ -1552,9 +1643,9 @@ p {
 }
 .form-msg.err {
 	display: block;
-	color: #b42318;
-	background: rgba(180, 35, 24, 0.06);
-	border: 1px solid rgba(180, 35, 24, 0.18);
+	color: var(--err);
+	background: rgba(var(--err-rgb), 0.06);
+	border: 1px solid rgba(var(--err-rgb), 0.18);
 }
 .form-success {
 	display: none;
@@ -1609,7 +1700,7 @@ p {
 	width: 18px;
 	height: 18px;
 	flex: none;
-	stroke: var(--accent);
+	stroke: var(--accent-blu);
 	margin-top: 0.15rem;
 }
 .cinfo-row b {
@@ -1775,14 +1866,20 @@ p {
 	list-style: disc;
 }
 .prose li::marker {
-	color: var(--accent);
+	color: var(--accent-blu);
 }
+/* The neon azzurro is unreadable as text on white (1.54:1) but it is the
+   right colour for a 2px rule, where contrast is decorative rather than
+   informational. So the link TEXT is azzurro-ink and the underline is the
+   neon itself, lighting up on hover. Same hue family, two legible jobs. */
 .prose a {
 	color: var(--accent);
 	border-bottom: 1px solid rgba(var(--accent-rgb), 0.35);
+	transition: border-color var(--dur-fast) var(--ease-out);
 }
 .prose a:hover {
-	border-color: var(--accent);
+	border-bottom-width: 2px;
+	border-color: var(--accent-azzurro);
 }
 .prose strong {
 	color: var(--ink);
@@ -1811,9 +1908,6 @@ footer {
 .foot .brand-logo-img {
 	width: 132px;
 	max-height: 34px;
-}
-.foot .brand-word {
-	font-size: 0.9rem;
 }
 .foot-nav {
 	display: flex;
@@ -1865,8 +1959,10 @@ footer {
 	border-radius: 50%;
 	display: grid;
 	place-items: center;
-	background: var(--accent);
-	box-shadow: 0 10px 30px rgba(var(--accent-rgb), 0.35);
+	/* verde: WhatsApp is a positive-state affordance and green is its own
+	   recognised signal — it must never compete with the blu primary CTA */
+	background: var(--verde-ink);
+	box-shadow: 0 10px 30px rgba(var(--verde-ink-rgb), 0.35);
 	transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 #waFloat:hover {
@@ -1899,20 +1995,10 @@ footer {
 		padding-top: 1.6rem;
 		min-height: auto;
 	}
-	.hero-masthead {
-		flex-direction: row;
-		align-items: baseline;
-		gap: 1rem;
-		flex-wrap: wrap;
-	}
-	.hm-num {
-		font-size: 2.6rem;
-	}
-	.hero-proof {
-		flex-direction: row;
-		flex-wrap: wrap;
-		gap: 0.6rem 1.6rem;
-		margin-top: 1rem;
+	/* on one column the list sits below the fold — trim it to the three
+	   most recent so the hero stays a hero */
+	.hl-item:nth-child(n + 4) {
+		display: none;
 	}
 	.svc-grid {
 		grid-template-columns: repeat(2, 1fr);
@@ -1944,15 +2030,6 @@ footer {
 	}
 	.work:nth-child(even) .work-copy {
 		order: 1;
-	}
-	.diag-panel {
-		grid-template-columns: 1fr;
-	}
-	.diag-side {
-		border-left: 0;
-		border-top: 1px solid var(--line);
-		padding-left: 0;
-		padding-top: 1.6rem;
 	}
 	.stats-in {
 		grid-template-columns: repeat(2, 1fr);
@@ -1990,13 +2067,6 @@ footer {
 	}
 	.svc-grid {
 		grid-template-columns: 1fr;
-	}
-	.chips {
-		gap: 0.5rem;
-	}
-	.chip {
-		padding: 0.62rem 0.9rem;
-		font-size: 0.74rem;
 	}
 	.work-shot {
 		aspect-ratio: 4 / 3;
@@ -2103,7 +2173,7 @@ footer {
 	font-weight: 700;
 	letter-spacing: 0.16em;
 	text-transform: uppercase;
-	color: var(--accent);
+	color: var(--accent-blu);
 	margin-bottom: 0.5rem;
 }
 .q-item {
@@ -2122,8 +2192,9 @@ footer {
 	margin-top: 1.2rem;
 	padding: 1rem 1.1rem;
 	border-radius: 2px;
-	background: rgba(var(--accent-rgb), 0.06);
-	border: 1px solid rgba(var(--accent-rgb), 0.14);
+	/* tint follows its own heading, which is blu */
+	background: rgba(var(--accent-blu-rgb), 0.05);
+	border: 1px solid rgba(var(--accent-blu-rgb), 0.14);
 	color: var(--ink-muted);
 	font-size: 0.9rem;
 	line-height: 1.65;
@@ -2255,7 +2326,7 @@ footer {
 	height: 11px;
 	border-radius: 50%;
 	background: var(--surface);
-	border: 2px solid var(--accent);
+	border: 2px solid var(--accent-blu);
 	box-shadow: 0 0 0 3px var(--bg-soft);
 }
 .path-item h4 {
@@ -2431,7 +2502,7 @@ footer {
 	list-style: decimal;
 }
 .prose ol li::marker {
-	color: var(--accent);
+	color: var(--accent-blu);
 }
 .prose table {
 	width: 100%;
@@ -2458,9 +2529,12 @@ footer {
 .prose code {
 	font-family: var(--font-body);
 	font-size: 0.85em;
-	color: var(--accent-deep);
-	background: rgba(var(--accent-rgb), 0.07);
-	border: 1px solid rgba(var(--accent-rgb), 0.14);
+	/* was deep-green text on a teal tint: two unrelated hues in one chip.
+	   Inline code is neutral by nature — it carries no state and links
+	   nowhere, so it gets no accent at all. */
+	color: var(--ink);
+	background: var(--bg-soft);
+	border: 1px solid var(--line);
 	border-radius: 6px;
 	padding: 0.1em 0.4em;
 	font-weight: 600;
@@ -2564,8 +2638,8 @@ footer {
 	max-height: calc(100vh - 2.4rem);
 	overflow-y: auto;
 	background: var(--surface);
-	border: 1px solid var(--line-strong);
-	border-radius: 22px;
+	border: 1px solid var(--ink);
+	border-radius: 0;
 	box-shadow: 0 30px 80px rgba(var(--ink-rgb), 0.26);
 	padding: clamp(1.6rem, 3.5vw, 2.2rem);
 	animation: cmRise 0.35s cubic-bezier(0.22, 1, 0.36, 1);
@@ -2602,7 +2676,7 @@ footer {
 	flex: none;
 	width: 40px;
 	height: 40px;
-	border-radius: 50%;
+	border-radius: 0;
 	display: grid;
 	place-items: center;
 	color: var(--ink-muted);
@@ -2637,18 +2711,44 @@ footer {
 	width: 100%;
 	margin-bottom: 0.55rem;
 }
+/* colour comes from the global .btn-wa now; the modal only adds lift */
 .contact-modal-card .btn-wa {
-	background: var(--accent);
-	color: var(--surface);
-	box-shadow: 0 6px 22px rgba(var(--accent-rgb), 0.28);
+	box-shadow: 0 6px 22px rgba(var(--verde-ink-rgb), 0.28);
 }
 .contact-modal-card .btn-wa:hover {
-	background: var(--accent-deep);
-	box-shadow: 0 12px 32px rgba(var(--accent-rgb), 0.34);
+	box-shadow: 0 12px 32px rgba(var(--verde-ink-rgb), 0.34);
 }
-.contact-modal-card .btn-wa:active {
-	background: var(--accent-deep);
+/* success state — replaces the form in place so the dialog confirms
+   instead of silently disappearing */
+.cm-success {
+	text-align: center;
+	padding: 1.6rem 0 0.4rem;
 }
+.cm-success:focus {
+	outline: none;
+}
+.cm-success svg {
+	width: 44px;
+	height: 44px;
+	color: var(--verde-ink);
+	margin-bottom: 1rem;
+}
+.cm-success h3 {
+	font-family: var(--font-display);
+	font-size: 1.6rem;
+	font-weight: 500;
+	color: var(--ink);
+	margin-bottom: 0.5rem;
+}
+.cm-success p {
+	font-size: 0.94rem;
+	color: var(--ink-muted);
+	line-height: 1.65;
+	margin-bottom: 1.4rem;
+	max-width: 34ch;
+	margin-inline: auto;
+}
+
 .contact-modal-card .cm-foot {
 	margin-top: 1rem;
 	padding-top: 1rem;
@@ -2695,18 +2795,29 @@ body.no-scroll {
 		transition-duration: 0.01ms !important;
 	}
 	.rv,
+	.rv-rise,
+	.rv-media,
+	.rv-num,
 	.hload {
 		opacity: 1 !important;
 		transform: none !important;
+		clip-path: none !important;
 	}
-	.hero-shape .blob-a,
-	.hero-shape .blob-b,
+	.rv-media img {
+		transform: none !important;
+	}
+	.steps::before,
+	.draw-line::after,
+	.hero-rule {
+		transform: scaleX(1) !important;
+	}
+	/* the blueprint field is decoration that moves — drop it entirely
+	   rather than freeze it, so there is nothing to distract */
+	.hero-grid {
+		display: none;
+	}
 	.contact-modal-card,
 	#contactModal::before {
 		animation: none;
-	}
-	/* ensure parallax is disabled */
-	.hero-shape {
-		transform: none !important;
 	}
 }
